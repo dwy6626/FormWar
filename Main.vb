@@ -1,4 +1,4 @@
-﻿Public Class Form1
+﻿Public Class Main
     Public Level As Short
     Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button4.Click
         Me.Close()
@@ -10,15 +10,15 @@
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         If MsgBox("準備好要開始這場" & Chr(22) & "表單大戰" & Chr(22) & "了嗎??", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-            Form2.Show()
-            Form3.SetDesktopLocation(400, 400)
+            BackGround.Show()
+            Enemy.SetDesktopLocation(400, 400)
             Me.Hide()
-            Form3.Show()
+            Enemy.Show()
         End If
     End Sub
 
     Private Sub Button2_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
-        Form7.Show()
+        Difficulty.Show()
     End Sub
 
     Private Sub Label1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Label1.Click

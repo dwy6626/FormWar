@@ -1,4 +1,4 @@
-﻿Public Class Form2
+﻿Public Class BackGround
     Public c As Int64
     Public ButtleEnd As Boolean
     Private Sub Form2_Deactivate(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Deactivate

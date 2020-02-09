@@ -1,7 +1,7 @@
-﻿Public Class Form6
+﻿Public Class Results
 
     Private Sub Form6_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Select Case Form1.Level
+        Select Case Main.Level
             Case 3
                 Label1.Text = "恭喜您贏得了這場腦殘的戰爭XD" & vbCrLf & vbCrLf & "有一個神祕的獎勵喔，" & vbCrLf & "就是：講師幫你的小隊加分XDD" & vbCrLf & vbCrLf & "CRSC BEST!!" & vbCrLf & vbCrLf & "什麼，還想要別的獎勵??" & vbCrLf & "雙擊主畫面底下的「Made by YDW」" & vbCrLf & "會發生神奇的事喔XDD"
             Case 4
@@ -12,9 +12,9 @@
     End Sub
 
     Private Sub Label2_MouseDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Label2.MouseDoubleClick
-        Form2.Close()
-        Form1.Show()
-        Form1.SetDesktopLocation(300, 200)
+        BackGround.Close()
+        Main.Show()
+        Main.SetDesktopLocation(300, 200)
         Me.Close()
     End Sub
 End Class
