@@ -5,17 +5,50 @@
     Dim maxFormNumber As Integer = 5
     'Basic: a(x) is of length x+1
     Dim fakeForms(maxFormNumber - 1) As FakeForm
-    Private Sub Label1_Click(ByVal ByValsender As Object, ByVal e As EventArgs) Handles Label1.MouseClick
+    Private Sub Attacked(ByVal ByValsender As Object, ByVal e As EventArgs) Handles Label1.MouseClick, Me.MouseClick
+        If Label1.Text = "1" Then
+            BackGround.Timer.Enabled = False
+            Hide()
+            For i = 0 To maxFormNumber - 1
+                If fakeForms(i).Visible Then
+                    fakeForms(i).Close()
+                End If
+            Next
+            Close()
+            Results.Show()
+            Results.SetDesktopLocation(screenw \ 2, screenh \ 2)
+        ElseIf Label1.Text = "50" Then
+            BackGround.Timer.Enabled = True
+            TimerMove.Enabled = True
+        ElseIf Label1.Text = "25" Then
+            SpeedScale += 10
+            TimerMove.Enabled = True
+        ElseIf Label1.Text = "15" Then
+            Select Case Level
+                Case 1
+                    TimerJump.Interval = 2000
+                Case 3
+                    TimerJump.Interval = 750
+                Case 4
+                    TimerJump.Interval = 750
+                Case Else
+                    TimerJump.Interval = 1000
+            End Select
+        ElseIf Label1.Text = "5" Then
+            Select Case Level
+                Case 1
+                    TimerInput.Interval = 9000
+                Case 3
+                    TimerInput.Interval = 4000
+                Case 4
+                    TimerInput.Interval = 2000
+                Case Else
+                    TimerInput.Interval = 6000
+            End Select
+        End If
         Label1.Text = Val(Label1.Text) - 1
     End Sub
-    Private Sub Form3_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Me.MouseClick
-        Label1.Text = Val(Label1.Text) - 1
-    End Sub
-
-    Private Sub Label1_MouseDoubleClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Label1.MouseDoubleClick
-        Label1.Text = Val(Label1.Text) - 1
-    End Sub
-    Private Sub Form3_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles Me.KeyDown
+    Private Sub CheatKey(ByVal sender As Object, ByVal e As KeyEventArgs) Handles Me.KeyDown
         Select Case e.KeyCode
             Case Keys.C
                 If cheat1 = 0 Then
@@ -106,10 +139,10 @@
                 ElseIf cheat3 = 2 Or cheat3 = 3 Then
                     cheat3 += 1
                 ElseIf cheat2 = 5 Then
-                    Timer1.Enabled = False
-                    Timer2.Enabled = False
-                    Timer3.Enabled = False
-                    Timer4.Enabled = False
+                    TimerMove.Enabled = False
+                    TimerMsg.Enabled = False
+                    TimerInput.Enabled = False
+                    TimerJump.Enabled = False
                 Else
                     cheat1 = 0
                     cheat2 = 0
@@ -140,90 +173,46 @@
         End Select
     End Sub
 
-    Private Sub Form3_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
-        BackGround.ButtleEnd = 0
+    Private Sub Loading(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
         For i = 0 To maxFormNumber - 1
             fakeForms(i) = New FakeForm
         Next
-        Select Case Main.Level
+        Select Case Level
             Case 1
-                Timer2.Interval = 7000
-                Timer3.Interval = 13000
-                Timer4.Interval = 4000
+                TimerMsg.Interval = 7000
+                TimerInput.Interval = 13000
+                TimerJump.Interval = 4000
                 SizeScale = 0.25
-                SpeedScale = 20
+                SpeedScale = 25
             Case 3
-                Timer2.Interval = 5000
-                Timer3.Interval = 7000
-                Timer4.Interval = 1500
+                TimerMsg.Interval = 5000
+                TimerInput.Interval = 7000
+                TimerJump.Interval = 1500
                 SizeScale = 0.15
-                SpeedScale = 40
+                SpeedScale = 45
             Case 4
-                Timer2.Interval = 3000
-                Timer3.Interval = 5000
-                Timer4.Interval = 1000
+                TimerMsg.Interval = 3000
+                TimerInput.Interval = 5000
+                TimerJump.Interval = 1000
                 SizeScale = 0.1
-                SpeedScale = 50
+                SpeedScale = 55
             Case Else
-                Timer2.Interval = 5000
-                Timer3.Interval = 9000
-                Timer4.Interval = 2000
+                TimerMsg.Interval = 5000
+                TimerInput.Interval = 9000
+                TimerJump.Interval = 2000
                 SizeScale = 0.18
-                SpeedScale = 30
+                SpeedScale = 35
         End Select
         FormReSize(Me)
     End Sub
-    Private Sub Label1_TextChanged(ByVal sender As Object, ByVal e As EventArgs) Handles Label1.TextChanged
-        If Label1.Text = "0" Then
-            BackGround.ButtleEnd = 1
-            BackGround.Timer1.Enabled = False
-            Hide()
-            For i = 0 To maxFormNumber - 1
-                If fakeForms(i).Visible Then
-                    fakeForms(i).Close()
-                End If
-            Next
-            Close()
-            Results.Show()
-            Results.SetDesktopLocation(screenw \ 2, screenh \ 2)
-        ElseIf Label1.Text = "49" Then
-            Timer1.Enabled = True
-        ElseIf Label1.Text = "24" Then
-            SpeedScale += 10
-            Timer1.Enabled = True
-        ElseIf Label1.Text = "14" Then
-            Select Case Main.Level
-                Case 1
-                    Timer4.Interval = 2000
-                Case 3
-                    Timer4.Interval = 750
-                Case 4
-                    Timer4.Interval = 750
-                Case Else
-                    Timer4.Interval = 1000
-            End Select
-        ElseIf Label1.Text = "4" Then
-            Select Case Main.Level
-                Case 1
-                    Timer3.Interval = 9000
-                Case 3
-                    Timer3.Interval = 4000
-                Case 4
-                    Timer3.Interval = 2000
-                Case Else
-                    Timer3.Interval = 6000
-            End Select
-        End If
-    End Sub
-
-    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer1.Tick
+    Private Sub Moving(ByVal sender As Object, ByVal e As EventArgs) Handles TimerMove.Tick
         FormMove(Me)
     End Sub
 
-    Private Sub Timer2_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer2.Tick
+    Private Sub SkillMsg(ByVal sender As Object, ByVal e As EventArgs) Handles TimerMsg.Tick
         Randomize()
         If Val(Label1.Text) < 20 Then
-            Select Case Main.Level
+            Select Case Level
                 Case 1
                     MsgBox("Message Box攻擊!!", 16, "攻擊")
                 Case 4
@@ -238,7 +227,7 @@
                     MsgBox("超Message Box攻擊!!", 48 + 256, "攻擊")
             End Select
         ElseIf Val(Label1.Text) < 45 Then
-            Select Case Main.Level
+            Select Case Level
                 Case 4
                     MsgBox("超Message Box攻擊!!", 48 + 256, "攻擊")
                     MsgBox("超Message Box攻擊!!", 48 + 256, "攻擊")
@@ -249,10 +238,10 @@
         End If
     End Sub
 
-    Private Sub Timer3_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer3.Tick
+    Private Sub SkillInput(ByVal sender As Object, ByVal e As EventArgs) Handles TimerInput.Tick
         Randomize()
         If Val(Label1.Text) < 13 Then
-            Select Case Main.Level
+            Select Case Level
                 Case 3
                     InputBox("強Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
                     InputBox("強Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
@@ -264,7 +253,7 @@
                     InputBox("Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
             End Select
         ElseIf Val(Label1.Text) < 40 Then
-            Select Case Main.Level
+            Select Case Level
                 Case 4
                     InputBox("強Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
                     InputBox("強Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
@@ -274,9 +263,9 @@
         End If
     End Sub
 
-    Private Sub Timer4_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer4.Tick
+    Private Sub Jumping(ByVal sender As Object, ByVal e As EventArgs) Handles TimerJump.Tick
         Randomize()
-        Select Case Main.Level
+        Select Case Level
             Case 1
                 If Val(Label1.Text) < 10 Then
                     FakeForm_Summon(fakeForms(0), True)
@@ -320,10 +309,6 @@
                 End If
         End Select
 
-    End Sub
-
-    Private Sub Form3_MouseDoubleClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseDoubleClick
-        Label1.Text = Val(Label1.Text) - 1
     End Sub
     Private Sub FakeForm_Summon(ByRef formAddr As FakeForm, Optional thisPosition As Boolean = False)
         If formAddr.Visible Then formAddr.Close()

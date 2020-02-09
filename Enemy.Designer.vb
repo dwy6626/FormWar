@@ -24,10 +24,10 @@ Partial Class Enemy
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.Timer2 = New System.Windows.Forms.Timer(Me.components)
-        Me.Timer3 = New System.Windows.Forms.Timer(Me.components)
-        Me.Timer4 = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerMove = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerMsg = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerInput = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerJump = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'Label1
@@ -41,23 +41,23 @@ Partial Class Enemy
         Me.Label1.Text = "50"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Timer1
+        'TimerMove
         '
         '
-        'Timer2
+        'TimerMsg
         '
-        Me.Timer2.Enabled = True
-        Me.Timer2.Interval = 5000
+        Me.TimerMsg.Enabled = True
+        Me.TimerMsg.Interval = 5000
         '
-        'Timer3
+        'TimerInput
         '
-        Me.Timer3.Enabled = True
-        Me.Timer3.Interval = 9000
+        Me.TimerInput.Enabled = True
+        Me.TimerInput.Interval = 9000
         '
-        'Timer4
+        'TimerJump
         '
-        Me.Timer4.Enabled = True
-        Me.Timer4.Interval = 2000
+        Me.TimerJump.Enabled = True
+        Me.TimerJump.Interval = 2000
         '
         'Enemy
         '
@@ -74,9 +74,9 @@ Partial Class Enemy
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents Timer1 As System.Windows.Forms.Timer
-    Friend WithEvents Timer2 As System.Windows.Forms.Timer
-    Friend WithEvents Timer3 As System.Windows.Forms.Timer
-    Friend WithEvents Timer4 As System.Windows.Forms.Timer
+    Friend WithEvents TimerMove As System.Windows.Forms.Timer
+    Friend WithEvents TimerMsg As System.Windows.Forms.Timer
+    Friend WithEvents TimerInput As System.Windows.Forms.Timer
+    Friend WithEvents TimerJump As System.Windows.Forms.Timer
     Public WithEvents Label1 As Label
 End Class

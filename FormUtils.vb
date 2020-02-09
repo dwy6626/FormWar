@@ -1,6 +1,6 @@
 ﻿Module FormUtils
+    Public Level As Short
     Public screenw, screenh As Integer
-    Public SpeedShift As Short = 10
     Public SpeedScale As Short
     Public SizeScale As Double = 0.15
     ReadOnly FontSizeScale As Double = 0.4
@@ -17,8 +17,8 @@
     Public Sub FormMove(ByRef form)
         Randomize()
         form.SetDesktopLocation(
-            form.Location.X + form.x_sign * (Int(Rnd() * SpeedScale) + SpeedShift),
-            form.Location.Y + form.y_sign * (Int(Rnd() * SpeedScale) + SpeedShift)
+            form.Location.X + form.x_sign * SpeedScale,
+            form.Location.Y + form.y_sign * SpeedScale
         )
         If form.Location.X + form.Size.Width \ 2 > screenw And form.x_sign = 1 Then
             form.x_sign = -1

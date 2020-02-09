@@ -1,17 +1,21 @@
 ﻿Public Class BackGround
-    Public c As Long
-    Public ButtleEnd As Boolean
+    Private time As Integer = 0
     Private Sub Form2_Deactivate(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Deactivate
         Me.Activate()
     End Sub
-    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer1.Tick
-        LabelSec.Text = Val(LabelSec.Text) + 1
-        If Val(LabelSec.Text) < 10 Then LabelSec.Text = "0" + LabelSec.Text
-        If LabelSec.Text = "60" Then
-            LabelSec.Text = "00"
-            LabelMin.Text = Val(LabelMin.Text) + 1
-            If Val(LabelMin.Text) < 10 Then LabelMin.Text = "0" + LabelMin.Text
-        End If
+    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer.Tick
+        time += 1
+        Dim sec As Byte = time Mod 60
+        Dim min As Byte = time \ 60
+        Label.Text = "時間：" + TimeFormat(min) + " 分 " + TimeFormat(sec) + " 秒"
     End Sub
-
+    Private Function TimeFormat(ByVal t) As String
+        Dim strReturn As String
+        If t < 10 Then
+            strReturn = "0" + t.ToString()
+        Else
+            strReturn = t.ToString()
+        End If
+        Return strReturn
+    End Function
 End Class

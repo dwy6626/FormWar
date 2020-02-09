@@ -22,48 +22,48 @@ Partial Class Results
     '請不要使用程式碼編輯器進行修改。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
+        Me.LabelAward = New System.Windows.Forms.Label()
+        Me.LabelClose = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
-        'Label1
+        'LabelAward
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(31, 9)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(0, 12)
-        Me.Label1.TabIndex = 0
+        Me.LabelAward.AutoSize = True
+        Me.LabelAward.Location = New System.Drawing.Point(31, 9)
+        Me.LabelAward.Name = "LabelAward"
+        Me.LabelAward.Size = New System.Drawing.Size(0, 12)
+        Me.LabelAward.TabIndex = 0
         '
-        'Label2
+        'LabelClose
         '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("微軟正黑體", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.Navy
-        Me.Label2.Location = New System.Drawing.Point(67, 216)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(112, 17)
-        Me.Label2.TabIndex = 1
-        Me.Label2.Text = "滑鼠雙擊此處關閉"
+        Me.LabelClose.AutoSize = True
+        Me.LabelClose.Font = New System.Drawing.Font("微軟正黑體", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.LabelClose.ForeColor = System.Drawing.Color.Navy
+        Me.LabelClose.Location = New System.Drawing.Point(67, 216)
+        Me.LabelClose.Name = "LabelClose"
+        Me.LabelClose.Size = New System.Drawing.Size(112, 17)
+        Me.LabelClose.TabIndex = 1
+        Me.LabelClose.Text = "滑鼠雙擊此處關閉"
         '
-        'Form6
+        'Results
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(256, 242)
+        Me.ClientSize = New System.Drawing.Size(256, 241)
         Me.ControlBox = False
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.LabelClose)
+        Me.Controls.Add(Me.LabelAward)
         Me.MaximizeBox = False
         Me.MaximumSize = New System.Drawing.Size(272, 280)
         Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(272, 280)
-        Me.Name = "Form6"
+        Me.Name = "Results"
         Me.Text = "過關獎勵"
         Me.TopMost = True
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents LabelAward As System.Windows.Forms.Label
+    Friend WithEvents LabelClose As System.Windows.Forms.Label
 End Class

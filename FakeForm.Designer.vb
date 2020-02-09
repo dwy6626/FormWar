@@ -24,7 +24,8 @@ Partial Class FakeForm
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerMove = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerJump = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'Label1
@@ -38,9 +39,14 @@ Partial Class FakeForm
         Me.Label1.Text = "50"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
-        'Timer1
+        'TimerMove
         '
-        Me.Timer1.Enabled = True
+        Me.TimerMove.Enabled = True
+        '
+        'TimerJump
+        '
+        Me.TimerJump.Enabled = True
+        Me.TimerJump.Interval = 5000
         '
         'FakeForm
         '
@@ -57,6 +63,7 @@ Partial Class FakeForm
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents Timer1 As System.Windows.Forms.Timer
+    Friend WithEvents TimerMove As System.Windows.Forms.Timer
     Public WithEvents Label1 As Label
+    Friend WithEvents TimerJump As Timer
 End Class

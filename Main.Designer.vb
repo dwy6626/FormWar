@@ -100,7 +100,7 @@ Partial Class Main
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(45, 16)
         Me.Label2.TabIndex = 5
-        Me.Label2.Text = "ver 1.3"
+        Me.Label2.Text = "ver 1.4"
         '
         'Button2
         '

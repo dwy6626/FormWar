@@ -22,92 +22,92 @@ Partial Class Difficulty
     '請不要使用程式碼編輯器進行修改。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.RadioButton1 = New System.Windows.Forms.RadioButton
-        Me.RadioButton2 = New System.Windows.Forms.RadioButton
-        Me.RadioButton3 = New System.Windows.Forms.RadioButton
-        Me.RadioButton4 = New System.Windows.Forms.RadioButton
+        Me.ButtonConfirm = New System.Windows.Forms.Button()
+        Me.RadioEasy = New System.Windows.Forms.RadioButton()
+        Me.RadioMedium = New System.Windows.Forms.RadioButton()
+        Me.RadioHard = New System.Windows.Forms.RadioButton()
+        Me.RadioHell = New System.Windows.Forms.RadioButton()
         Me.SuspendLayout()
         '
-        'Button1
+        'ButtonConfirm
         '
-        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button1.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Location = New System.Drawing.Point(45, 123)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(113, 38)
-        Me.Button1.TabIndex = 0
-        Me.Button1.Text = "確定"
-        Me.Button1.UseVisualStyleBackColor = False
+        Me.ButtonConfirm.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.ButtonConfirm.Font = New System.Drawing.Font("新細明體", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.ButtonConfirm.ForeColor = System.Drawing.Color.White
+        Me.ButtonConfirm.Location = New System.Drawing.Point(45, 123)
+        Me.ButtonConfirm.Name = "ButtonConfirm"
+        Me.ButtonConfirm.Size = New System.Drawing.Size(113, 38)
+        Me.ButtonConfirm.TabIndex = 0
+        Me.ButtonConfirm.Text = "確定"
+        Me.ButtonConfirm.UseVisualStyleBackColor = False
         '
-        'RadioButton1
+        'RadioEasy
         '
-        Me.RadioButton1.AutoSize = True
-        Me.RadioButton1.ForeColor = System.Drawing.Color.White
-        Me.RadioButton1.Location = New System.Drawing.Point(33, 20)
-        Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(47, 16)
-        Me.RadioButton1.TabIndex = 1
-        Me.RadioButton1.TabStop = True
-        Me.RadioButton1.Text = "稍易"
-        Me.RadioButton1.UseVisualStyleBackColor = True
+        Me.RadioEasy.AutoSize = True
+        Me.RadioEasy.ForeColor = System.Drawing.Color.White
+        Me.RadioEasy.Location = New System.Drawing.Point(33, 20)
+        Me.RadioEasy.Name = "RadioEasy"
+        Me.RadioEasy.Size = New System.Drawing.Size(47, 16)
+        Me.RadioEasy.TabIndex = 1
+        Me.RadioEasy.TabStop = True
+        Me.RadioEasy.Text = "稍易"
+        Me.RadioEasy.UseVisualStyleBackColor = True
         '
-        'RadioButton2
+        'RadioMedium
         '
-        Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.ForeColor = System.Drawing.Color.White
-        Me.RadioButton2.Location = New System.Drawing.Point(33, 42)
-        Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(47, 16)
-        Me.RadioButton2.TabIndex = 2
-        Me.RadioButton2.Text = "中等"
-        Me.RadioButton2.UseVisualStyleBackColor = True
+        Me.RadioMedium.AutoSize = True
+        Me.RadioMedium.ForeColor = System.Drawing.Color.White
+        Me.RadioMedium.Location = New System.Drawing.Point(33, 42)
+        Me.RadioMedium.Name = "RadioMedium"
+        Me.RadioMedium.Size = New System.Drawing.Size(47, 16)
+        Me.RadioMedium.TabIndex = 2
+        Me.RadioMedium.Text = "中等"
+        Me.RadioMedium.UseVisualStyleBackColor = True
         '
-        'RadioButton3
+        'RadioHard
         '
-        Me.RadioButton3.AutoSize = True
-        Me.RadioButton3.ForeColor = System.Drawing.Color.White
-        Me.RadioButton3.Location = New System.Drawing.Point(33, 64)
-        Me.RadioButton3.Name = "RadioButton3"
-        Me.RadioButton3.Size = New System.Drawing.Size(47, 16)
-        Me.RadioButton3.TabIndex = 3
-        Me.RadioButton3.TabStop = True
-        Me.RadioButton3.Text = "困難"
-        Me.RadioButton3.UseVisualStyleBackColor = True
+        Me.RadioHard.AutoSize = True
+        Me.RadioHard.ForeColor = System.Drawing.Color.White
+        Me.RadioHard.Location = New System.Drawing.Point(33, 64)
+        Me.RadioHard.Name = "RadioHard"
+        Me.RadioHard.Size = New System.Drawing.Size(47, 16)
+        Me.RadioHard.TabIndex = 3
+        Me.RadioHard.TabStop = True
+        Me.RadioHard.Text = "困難"
+        Me.RadioHard.UseVisualStyleBackColor = True
         '
-        'RadioButton4
+        'RadioHell
         '
-        Me.RadioButton4.AutoSize = True
-        Me.RadioButton4.ForeColor = System.Drawing.Color.White
-        Me.RadioButton4.Location = New System.Drawing.Point(33, 86)
-        Me.RadioButton4.Name = "RadioButton4"
-        Me.RadioButton4.Size = New System.Drawing.Size(95, 16)
-        Me.RadioButton4.TabIndex = 4
-        Me.RadioButton4.TabStop = True
-        Me.RadioButton4.Text = "不可能的任務"
-        Me.RadioButton4.UseVisualStyleBackColor = True
+        Me.RadioHell.AutoSize = True
+        Me.RadioHell.ForeColor = System.Drawing.Color.White
+        Me.RadioHell.Location = New System.Drawing.Point(33, 86)
+        Me.RadioHell.Name = "RadioHell"
+        Me.RadioHell.Size = New System.Drawing.Size(95, 16)
+        Me.RadioHell.TabIndex = 4
+        Me.RadioHell.TabStop = True
+        Me.RadioHell.Text = "不可能的任務"
+        Me.RadioHell.UseVisualStyleBackColor = True
         '
-        'Form7
+        'Difficulty
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
         Me.ClientSize = New System.Drawing.Size(196, 173)
-        Me.Controls.Add(Me.RadioButton4)
-        Me.Controls.Add(Me.RadioButton3)
-        Me.Controls.Add(Me.RadioButton2)
-        Me.Controls.Add(Me.RadioButton1)
-        Me.Controls.Add(Me.Button1)
-        Me.Name = "Form7"
+        Me.Controls.Add(Me.RadioHell)
+        Me.Controls.Add(Me.RadioHard)
+        Me.Controls.Add(Me.RadioMedium)
+        Me.Controls.Add(Me.RadioEasy)
+        Me.Controls.Add(Me.ButtonConfirm)
+        Me.Name = "Difficulty"
         Me.Text = "難易度"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents Button1 As System.Windows.Forms.Button
-    Friend WithEvents RadioButton1 As System.Windows.Forms.RadioButton
-    Friend WithEvents RadioButton2 As System.Windows.Forms.RadioButton
-    Friend WithEvents RadioButton3 As System.Windows.Forms.RadioButton
-    Friend WithEvents RadioButton4 As System.Windows.Forms.RadioButton
+    Friend WithEvents ButtonConfirm As System.Windows.Forms.Button
+    Friend WithEvents RadioEasy As System.Windows.Forms.RadioButton
+    Friend WithEvents RadioMedium As System.Windows.Forms.RadioButton
+    Friend WithEvents RadioHard As System.Windows.Forms.RadioButton
+    Friend WithEvents RadioHell As System.Windows.Forms.RadioButton
 End Class

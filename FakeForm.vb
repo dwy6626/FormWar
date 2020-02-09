@@ -1,7 +1,7 @@
 ﻿Public Class FakeForm
     Public x_sign As SByte = 1
     Public y_sign As SByte = 1
-    Private Sub Form4_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
+    Private Sub Loading(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
         FormReSize(Me)
         Randomize()
         Label1.Text = Int(Rnd() * Val(Enemy.Label1.Text))
@@ -13,14 +13,10 @@
             y_sign = -1
         End If
     End Sub
-    Private Sub Label1_MouseClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Label1.MouseClick
+    Private Sub Attacked(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Label1.MouseClick, Me.MouseClick
         Me.Close()
     End Sub
-
-    Private Sub Form3_MouseClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseClick
-        Me.Close()
-    End Sub
-    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer1.Tick
+    Private Sub Moving(ByVal sender As Object, ByVal e As EventArgs) Handles TimerMove.Tick
         FormMove(Me)
     End Sub
 End Class

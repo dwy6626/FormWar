@@ -1,5 +1,4 @@
 ﻿Public Class Main
-    Public Level As Short
     Private Sub Button2_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Button4.Click
         Me.Close()
     End Sub
@@ -27,6 +26,5 @@
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         screenw = Screen.PrimaryScreen.Bounds.Width - 110
         screenh = Screen.PrimaryScreen.Bounds.Height - 110
-        SpeedShift = Int(0.02 * screenh)
     End Sub
 End Class
