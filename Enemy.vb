@@ -1,14 +1,21 @@
 ﻿Public Class Enemy
-    Dim x_add, y_add As Boolean
-    Public Speed, cheat1, cheat2, cheat3 As Short
-    Public screenw, screenh As Integer
+    Public x_sign As SByte = 1
+    Public y_sign As SByte = 1
+    Public cheat1, cheat2, cheat3 As Short
     Dim maxFormNumber As Integer = 5
     'Basic: a(x) is of length x+1
     Dim fakeForms(maxFormNumber - 1) As FakeForm
-    Private Sub Label1_Click(ByVal ByValsender As System.Object, ByVal e As System.EventArgs) Handles Label1.MouseClick
+    Private Sub Label1_Click(ByVal ByValsender As Object, ByVal e As EventArgs) Handles Label1.MouseClick
         Label1.Text = Val(Label1.Text) - 1
     End Sub
-    Private Sub Form3_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
+    Private Sub Form3_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Me.MouseClick
+        Label1.Text = Val(Label1.Text) - 1
+    End Sub
+
+    Private Sub Label1_MouseDoubleClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Label1.MouseDoubleClick
+        Label1.Text = Val(Label1.Text) - 1
+    End Sub
+    Private Sub Form3_KeyDown(ByVal sender As Object, ByVal e As KeyEventArgs) Handles Me.KeyDown
         Select Case e.KeyCode
             Case Keys.C
                 If cheat1 = 0 Then
@@ -61,7 +68,7 @@
                     cheat1 = 0
                 ElseIf cheat3 = 6 Then
                     cheat3 = 0
-                    Speed *= 1.5
+                    SpeedScale *= 1.5
                 Else
                     cheat1 = 0
                     cheat2 = 0
@@ -133,9 +140,7 @@
         End Select
     End Sub
 
-    Private Sub Form3_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        screenw = Screen.PrimaryScreen.Bounds.Width - 110
-        screenh = Screen.PrimaryScreen.Bounds.Height - 110
+    Private Sub Form3_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
         BackGround.ButtleEnd = 0
         For i = 0 To maxFormNumber - 1
             fakeForms(i) = New FakeForm
@@ -145,37 +150,30 @@
                 Timer2.Interval = 7000
                 Timer3.Interval = 13000
                 Timer4.Interval = 4000
-                Speed = 20
+                SizeScale = 0.25
+                SpeedScale = 20
             Case 3
                 Timer2.Interval = 5000
                 Timer3.Interval = 7000
                 Timer4.Interval = 1500
-                Speed = 40
+                SizeScale = 0.15
+                SpeedScale = 40
             Case 4
                 Timer2.Interval = 3000
                 Timer3.Interval = 5000
                 Timer4.Interval = 1000
-                Speed = 50
+                SizeScale = 0.1
+                SpeedScale = 50
             Case Else
                 Timer2.Interval = 5000
                 Timer3.Interval = 9000
                 Timer4.Interval = 2000
-                Speed = 30
+                SizeScale = 0.18
+                SpeedScale = 30
         End Select
+        FormReSize(Me)
     End Sub
-
-    '   Private Sub Form3_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.LostFocus
-    '      Me.Focus()
-    ' End Sub
-
-    Private Sub Form3_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.MouseClick
-        Label1.Text = Val(Label1.Text) - 1
-    End Sub
-
-    Private Sub Label1_MouseDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Label1.MouseDoubleClick
-        Label1.Text = Val(Label1.Text) - 1
-    End Sub
-    Private Sub Label1_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles Label1.TextChanged
+    Private Sub Label1_TextChanged(ByVal sender As Object, ByVal e As EventArgs) Handles Label1.TextChanged
         If Label1.Text = "0" Then
             BackGround.ButtleEnd = 1
             BackGround.Timer1.Enabled = False
@@ -187,9 +185,12 @@
             Next
             Close()
             Results.Show()
-            Results.SetDesktopLocation(300, 300)
-            'ElseIf Label1.Text = "49" Then
-            '    Timer1.Enabled = True
+            Results.SetDesktopLocation(screenw \ 2, screenh \ 2)
+        ElseIf Label1.Text = "49" Then
+            Timer1.Enabled = True
+        ElseIf Label1.Text = "24" Then
+            SpeedScale += 10
+            Timer1.Enabled = True
         ElseIf Label1.Text = "14" Then
             Select Case Main.Level
                 Case 1
@@ -215,41 +216,11 @@
         End If
     End Sub
 
-    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
-        Randomize()
-        If Val(Label1.Text) < 25 Then
-            If Location.X < screenw And Me.Location.Y < screenh And x_add = True And y_add = True Then
-                SetDesktopLocation(Me.Location.X + Int(Rnd() * (Speed + 10)) + 10, Me.Location.Y + Int(Rnd() * (Speed + 10)) + 10)
-            ElseIf Me.Location.X > 50 And Me.Location.Y < screenh And x_add = False And y_add = True Then
-                Me.SetDesktopLocation(Me.Location.X - Int(Rnd() * (Speed + 10)) - 10, Me.Location.Y + Int(Rnd() * (Speed + 10)) + 10)
-            ElseIf Me.Location.X > 50 And Me.Location.Y > 50 And x_add = False And y_add = False Then
-                Me.SetDesktopLocation(Me.Location.X - Int(Rnd() * (Speed + 10)) - 10, Me.Location.Y - Int(Rnd() * (Speed + 10)) - 10)
-            ElseIf Me.Location.X < screenw And Me.Location.Y > 50 And x_add = True And y_add = False Then
-                Me.SetDesktopLocation(Me.Location.X + Int(Rnd() * (Speed + 10)) + 10, Me.Location.Y - Int(Rnd() * (Speed + 10)) - 10)
-            End If
-        Else
-            If Me.Location.X < screenw And Me.Location.Y < screenh And x_add = True And y_add = True Then
-                Me.SetDesktopLocation(Me.Location.X + Int(Rnd() * Speed) + 10, Me.Location.Y + Int(Rnd() * Speed) + 10)
-            ElseIf Me.Location.X > 50 And Me.Location.Y < screenh And x_add = False And y_add = True Then
-                Me.SetDesktopLocation(Me.Location.X - Int(Rnd() * Speed) - 10, Me.Location.Y + Int(Rnd() * Speed) + 10)
-            ElseIf Me.Location.X > 50 And Me.Location.Y > 50 And x_add = False And y_add = False Then
-                Me.SetDesktopLocation(Me.Location.X - Int(Rnd() * Speed) - 10, Me.Location.Y - Int(Rnd() * Speed) - 10)
-            ElseIf Me.Location.X < screenw And Me.Location.Y > 50 And x_add = True And y_add = False Then
-                Me.SetDesktopLocation(Me.Location.X + Int(Rnd() * Speed) + 10, Me.Location.Y - Int(Rnd() * Speed) - 10)
-            End If
-        End If
-        If Me.Location.X >= screenw And x_add = True Then
-            x_add = False
-        ElseIf Me.Location.Y >= screenh And y_add = True Then
-            y_add = False
-        ElseIf Me.Location.Y <= 50 And y_add = False Then
-            y_add = True
-        ElseIf Me.Location.X <= 50 And x_add = False Then
-            x_add = True
-        End If
+    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer1.Tick
+        FormMove(Me)
     End Sub
 
-    Private Sub Timer2_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer2.Tick
+    Private Sub Timer2_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer2.Tick
         Randomize()
         If Val(Label1.Text) < 20 Then
             Select Case Main.Level
@@ -278,7 +249,7 @@
         End If
     End Sub
 
-    Private Sub Timer3_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer3.Tick
+    Private Sub Timer3_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer3.Tick
         Randomize()
         If Val(Label1.Text) < 13 Then
             Select Case Main.Level
@@ -303,7 +274,7 @@
         End If
     End Sub
 
-    Private Sub Timer4_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer4.Tick
+    Private Sub Timer4_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer4.Tick
         Randomize()
         Select Case Main.Level
             Case 1
@@ -351,10 +322,9 @@
 
     End Sub
 
-    Private Sub Form3_MouseDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Me.MouseDoubleClick
+    Private Sub Form3_MouseDoubleClick(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseDoubleClick
         Label1.Text = Val(Label1.Text) - 1
     End Sub
-
     Private Sub FakeForm_Summon(ByRef formAddr As FakeForm, Optional thisPosition As Boolean = False)
         If formAddr.Visible Then formAddr.Close()
         formAddr = New FakeForm

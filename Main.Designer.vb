@@ -114,7 +114,7 @@ Partial Class Main
         Me.Button2.Text = "難度調整"
         Me.Button2.UseVisualStyleBackColor = False
         '
-        'Form1
+        'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -131,7 +131,7 @@ Partial Class Main
         Me.MaximizeBox = False
         Me.MaximumSize = New System.Drawing.Size(300, 350)
         Me.MinimumSize = New System.Drawing.Size(300, 350)
-        Me.Name = "Form1"
+        Me.Name = "Main"
         Me.Text = "表單大戰!!"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

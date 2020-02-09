@@ -1,6 +1,5 @@
 ﻿Public Class Difficulty
-
-    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Button1.Click
         If RadioButton1.Checked Then
             Main.Level = 1
         ElseIf RadioButton2.Checked Then
@@ -13,7 +12,7 @@
         Hide()
     End Sub
 
-    Private Sub Form7_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+    Private Sub Form7_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
         Select Case Main.Level
             Case 0 : RadioButton2.Checked = 1
             Case 1 : RadioButton1.Checked = 1

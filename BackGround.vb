@@ -1,10 +1,10 @@
 ﻿Public Class BackGround
-    Public c As Int64
+    Public c As Long
     Public ButtleEnd As Boolean
-    Private Sub Form2_Deactivate(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Deactivate
+    Private Sub Form2_Deactivate(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Deactivate
         Me.Activate()
     End Sub
-    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer1.Tick
         LabelSec.Text = Val(LabelSec.Text) + 1
         If Val(LabelSec.Text) < 10 Then LabelSec.Text = "0" + LabelSec.Text
         If LabelSec.Text = "60" Then
