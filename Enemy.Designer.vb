@@ -29,15 +29,18 @@ Partial Class Enemy
         Me.TimerInput = New System.Windows.Forms.Timer(Me.components)
         Me.TimerJump = New System.Windows.Forms.Timer(Me.components)
         Me.TimerSummon = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerHeal = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerHealEffect = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.Font = New System.Drawing.Font("微軟正黑體", 36.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label1.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Label1.Location = New System.Drawing.Point(9, 9)
         Me.Label1.Margin = New System.Windows.Forms.Padding(0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(53, 29)
+        Me.Label1.Size = New System.Drawing.Size(102, 110)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "50"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -65,11 +68,20 @@ Partial Class Enemy
         Me.TimerSummon.Enabled = True
         Me.TimerSummon.Interval = 2000
         '
+        'TimerHeal
+        '
+        Me.TimerHeal.Enabled = True
+        Me.TimerHeal.Interval = 10000
+        '
+        'TimerHealEffect
+        '
+        Me.TimerHealEffect.Interval = 50
+        '
         'Enemy
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(120, 61)
+        Me.ClientSize = New System.Drawing.Size(120, 128)
         Me.ControlBox = False
         Me.Controls.Add(Me.Label1)
         Me.MaximizeBox = False
@@ -86,4 +98,6 @@ Partial Class Enemy
     Friend WithEvents TimerJump As System.Windows.Forms.Timer
     Public WithEvents Label1 As Label
     Friend WithEvents TimerSummon As Timer
+    Friend WithEvents TimerHeal As Timer
+    Friend WithEvents TimerHealEffect As Timer
 End Class

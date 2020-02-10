@@ -2,9 +2,10 @@
     Public x_sign As SByte = 1
     Public y_sign As SByte = 1
     Public cheat1, cheat2, cheat3 As Short
-    Public levelJump, levelSmoke, levelSummon,
+    Public levelJump, levelSmoke, levelSummon, levelHeal,
         levelMsgAttack, levelInputAttack, levelSupMsgAttack, levelSupInputAttack,
         levelSpeedUp, levelMoreJump, levelAttackFreq As Byte
+    Public HealCount As Byte = 0
     ReadOnly maxFormNumber As Byte = 5
     'Basic: a(x) is of length x+1
     ReadOnly fakeForms(maxFormNumber - 1) As FakeForm
@@ -71,10 +72,13 @@
             SpeedScale /= 1.5
             inputKeys.Clear()
         ElseIf checkStream.Contains("THEWORLD") Then
-            TimerMove.Enabled = False
-            TimerMsg.Enabled = False
-            TimerInput.Enabled = False
-            TimerJump.Enabled = False
+            Dim toBool = Not TimerMsg.Enabled
+            TimerMsg.Enabled = toBool
+            TimerMove.Enabled = toBool
+            TimerInput.Enabled = toBool
+            TimerJump.Enabled = toBool
+            TimerSummon.Enabled = toBool
+            TimerHeal.Enabled = toBool
             inputKeys.Clear()
         ElseIf checkStream.Contains("CRSCBEST") Then
             Label1.Text = "1"
@@ -91,6 +95,7 @@
         TimerInput.Interval = 15000 - 2000 * Level
         TimerJump.Interval = 5000 - 1000 * Level
         TimerSummon.Interval = TimerJump.Interval * (10 - Level)
+        TimerHeal.Interval = 15000 - 5000 * Math.Max(Level - 3, 0)
 
         SizeScale = 0.27 - 0.03 * Level
         SpeedScale = 25 + 5 * Level
@@ -106,6 +111,7 @@
                 levelSummon = 0
                 levelSupMsgAttack = 0
                 levelSupInputAttack = 0
+                levelHeal = 0
             Case 2
                 levelMsgAttack = 45
                 levelInputAttack = 40
@@ -116,6 +122,7 @@
                 levelMoreJump = 15
                 levelSummon = 10
                 levelAttackFreq = 5
+                levelHeal = 5
                 levelSupInputAttack = 0
             Case 3
                 levelMsgAttack = 45
@@ -127,6 +134,7 @@
                 levelSupMsgAttack = 20
                 levelMoreJump = 15
                 levelAttackFreq = 10
+                levelHeal = 10
                 levelSupInputAttack = 5
             Case 4
                 levelJump = 50
@@ -136,6 +144,7 @@
                 levelSummon = 30
                 levelSpeedUp = 25
                 levelSupMsgAttack = 20
+                levelHeal = 18
                 levelMoreJump = 15
                 levelAttackFreq = 13
                 'ExtraSummon = 10
@@ -203,6 +212,26 @@
         End If
         If Val(Label1.Text) < levelJump Then
             SetDesktopLocation(Int(Rnd() * screenw), Int(Rnd() * screenh))
+        End If
+    End Sub
+    Private Sub Healing(ByVal sender As Object, ByVal e As EventArgs) Handles TimerHeal.Tick
+        If Val(Label1.Text) < levelHeal Then
+            HealCount = 0
+            TimerHealEffect.Enabled = True
+        End If
+    End Sub
+    Private Sub HealEffect(ByVal sender As Object, ByVal e As EventArgs) Handles TimerHealEffect.Tick
+        If HealCount Mod 2 = 1 Then
+            Label1.ForeColor = Color.DarkGreen
+        Else
+            Label1.ForeColor = Color.PaleGreen
+        End If
+        HealCount += 1
+        If HealCount = 4 Then
+            Label1.Text = Val(Label1.Text) + 1
+        ElseIf HealCount = 6 Then
+            TimerHealEffect.Enabled = False
+            Label1.ForeColor = Color.Black
         End If
     End Sub
     Private Sub FakeForm_Summon(ByRef formAddr As FakeForm, Optional thisPosition As Boolean = False)
