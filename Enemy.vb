@@ -2,9 +2,15 @@
     Public x_sign As SByte = 1
     Public y_sign As SByte = 1
     Public cheat1, cheat2, cheat3 As Short
-    Dim maxFormNumber As Integer = 5
+    Public levelJump, levelSmoke, levelSummon,
+        levelMsgAttack, levelInputAttack, levelSupMsgAttack, levelSupInputAttack,
+        levelSpeedUp, levelMoreJump, levelAttackFreq As Byte
+    ReadOnly maxFormNumber As Byte = 5
     'Basic: a(x) is of length x+1
-    Dim fakeForms(maxFormNumber - 1) As FakeForm
+    ReadOnly fakeForms(maxFormNumber - 1) As FakeForm
+    ReadOnly maxKey As Byte = 10
+    ReadOnly inputKeys As New List(Of String)
+    ReadOnly keyCodeConverter As New KeysConverter
     Private Sub Attacked(ByVal ByValsender As Object, ByVal e As EventArgs) Handles Label1.MouseClick, Me.MouseClick
         If Label1.Text = "1" Then
             BackGround.Timer.Enabled = False
@@ -17,13 +23,15 @@
             Close()
             Results.Show()
             Results.SetDesktopLocation(screenw \ 2, screenh \ 2)
-        ElseIf Label1.Text = "50" Then
+        ElseIf Val(Label1.Text) = 50 Then
             BackGround.Timer.Enabled = True
             TimerMove.Enabled = True
-        ElseIf Label1.Text = "25" Then
+        End If
+        If Val(Label1.Text) = levelSpeedUp Then
             SpeedScale += 10
-            TimerMove.Enabled = True
-        ElseIf Label1.Text = "15" Then
+            levelSpeedUp = 0
+        End If
+        If Val(Label1.Text) = levelMoreJump Then
             Select Case Level
                 Case 1
                     TimerJump.Interval = 2000
@@ -34,174 +42,105 @@
                 Case Else
                     TimerJump.Interval = 1000
             End Select
-        ElseIf Label1.Text = "5" Then
-            Select Case Level
-                Case 1
-                    TimerInput.Interval = 9000
-                Case 3
-                    TimerInput.Interval = 4000
-                Case 4
-                    TimerInput.Interval = 2000
-                Case Else
-                    TimerInput.Interval = 6000
-            End Select
+            levelMoreJump = 0
+        End If
+        If Val(Label1.Text) = levelAttackFreq Then
+            TimerMsg.Interval *= 0.75
+            TimerInput.Interval *= 0.75
         End If
         Label1.Text = Val(Label1.Text) - 1
     End Sub
     Private Sub CheatKey(ByVal sender As Object, ByVal e As KeyEventArgs) Handles Me.KeyDown
-        Select Case e.KeyCode
-            Case Keys.C
-                If cheat1 = 0 Then
-                    cheat1 += 1
-                    cheat2 = 0
-                    cheat3 = 0
-                ElseIf cheat1 = 3 Then
-                    cheat1 += 1
-                Else
-                    cheat1 = 0
-                    cheat2 = 0
-                    cheat3 = 0
-                End If
-            Case Keys.F
-                If cheat2 = 0 Then
-                    cheat2 += 1
-                    cheat3 = 0
-                    cheat1 = 0
-                Else
-                    cheat1 = 0
-                    cheat2 = 0
-                    cheat3 = 0
-                End If
-            Case Keys.R
-                If cheat1 = 1 Then
-                    cheat1 += 1
-                ElseIf cheat2 = 1 Then
-                    cheat2 += 1
-                Else
-                    cheat1 = 0
-                    cheat2 = 0
-                    cheat3 = 0
-                End If
-            Case Keys.S
-                If cheat1 = 2 Then
-                    cheat1 += 1
-                ElseIf cheat3 = 0 Then
-                    cheat3 += 1
-                    cheat2 = 0
-                    cheat1 = 0
-                Else
-                    cheat1 = 0
-                    cheat2 = 0
-                    cheat3 = 0
-                End If
-            Case Keys.P
-                If cheat3 = 1 Then
-                    cheat3 += 1
-                    cheat2 = 0
-                    cheat1 = 0
-                ElseIf cheat3 = 6 Then
-                    cheat3 = 0
-                    SpeedScale *= 1.5
-                Else
-                    cheat1 = 0
-                    cheat2 = 0
-                    cheat3 = 0
-                End If
-            Case Keys.D
-                If cheat3 = 4 Then
-                    cheat3 += 1
-                Else
-                    cheat1 = 0
-                    cheat2 = 0
-                    cheat3 = 0
-                End If
-            Case Keys.U
-                If cheat3 = 5 Then
-                    cheat3 += 1
-                Else
-                    cheat1 = 0
-                    cheat2 = 0
-                    cheat3 = 0
-                End If
-            Case Keys.B
-                If cheat1 = 4 Then
-                    cheat1 += 1
-                Else
-                    cheat1 = 0
-                    cheat2 = 0
-                    cheat3 = 0
-                End If
-            Case Keys.E
-                If cheat1 = 5 Then
-                    cheat1 += 1
-                ElseIf cheat2 = 2 Or cheat2 = 3 Then
-                    cheat2 += 1
-                ElseIf cheat3 = 2 Or cheat3 = 3 Then
-                    cheat3 += 1
-                ElseIf cheat2 = 5 Then
-                    TimerMove.Enabled = False
-                    TimerMsg.Enabled = False
-                    TimerInput.Enabled = False
-                    TimerJump.Enabled = False
-                Else
-                    cheat1 = 0
-                    cheat2 = 0
-                    cheat3 = 0
-                End If
-            Case Keys.Z
-                If cheat2 = 4 Then
-                    cheat2 += 1
-                Else
-                    cheat1 = 0
-                    cheat2 = 0
-                    cheat3 = 0
-                End If
-            Case Keys.S
-                If cheat1 = 6 Then
-                    cheat1 += 1
-                Else
-                    cheat1 = 0
-                    cheat2 = 0
-                    cheat3 = 0
-                End If
-            Case Keys.T
-                Label1.Text = "0"
-            Case Else
-                cheat1 = 0
-                cheat2 = 0
-                cheat3 = 0
-        End Select
+        Dim checkStream As String = ""
+        If inputKeys.Count > maxKey Then
+            inputKeys.RemoveAt(0)
+        End If
+        inputKeys.Add(keyCodeConverter.ConvertToString(e.KeyCode))
+        For Each x In inputKeys
+            If x.Length = 1 Then
+                checkStream &= x
+            Else
+                inputKeys.Clear()
+                Exit For
+            End If
+        Next
+        If checkStream.Contains("SPEEDUP") Then
+            SpeedScale *= 1.5
+            inputKeys.Clear()
+        ElseIf checkStream.Contains("SLOWDOWN") Then
+            SpeedScale /= 1.5
+            inputKeys.Clear()
+        ElseIf checkStream.Contains("THEWORLD") Then
+            TimerMove.Enabled = False
+            TimerMsg.Enabled = False
+            TimerInput.Enabled = False
+            TimerJump.Enabled = False
+            inputKeys.Clear()
+        ElseIf checkStream.Contains("CRSCBEST") Then
+            Label1.Text = "1"
+            inputKeys.Clear()
+        End If
     End Sub
 
     Private Sub Loading(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
         For i = 0 To maxFormNumber - 1
             fakeForms(i) = New FakeForm
         Next
+
+        TimerMsg.Interval = 8000 - 1000 * Level
+        TimerInput.Interval = 15000 - 2000 * Level
+        TimerJump.Interval = 5000 - 1000 * Level
+        TimerSummon.Interval = TimerJump.Interval * (10 - Level)
+
+        SizeScale = 0.27 - 0.03 * Level
+        SpeedScale = 25 + 5 * Level
+
         Select Case Level
             Case 1
-                TimerMsg.Interval = 7000
-                TimerInput.Interval = 13000
-                TimerJump.Interval = 4000
-                SizeScale = 0.25
-                SpeedScale = 25
+                levelMsgAttack = 40
+                levelJump = 35
+                levelSpeedUp = 25
+                levelMoreJump = 15
+                levelSmoke = 10
+                levelInputAttack = 5
+                levelSummon = 0
+                levelSupMsgAttack = 0
+                levelSupInputAttack = 0
+            Case 2
+                levelMsgAttack = 45
+                levelInputAttack = 40
+                levelJump = 35
+                levelSmoke = 30
+                levelSpeedUp = 25
+                levelSupMsgAttack = 20
+                levelMoreJump = 15
+                levelSummon = 10
+                levelAttackFreq = 5
+                levelSupInputAttack = 0
             Case 3
-                TimerMsg.Interval = 5000
-                TimerInput.Interval = 7000
-                TimerJump.Interval = 1500
-                SizeScale = 0.15
-                SpeedScale = 45
+                levelMsgAttack = 45
+                levelInputAttack = 40
+                levelJump = 35
+                levelSmoke = 35
+                levelSummon = 30
+                levelSpeedUp = 25
+                levelSupMsgAttack = 20
+                levelMoreJump = 15
+                levelAttackFreq = 10
+                levelSupInputAttack = 5
             Case 4
-                TimerMsg.Interval = 3000
-                TimerInput.Interval = 5000
-                TimerJump.Interval = 1000
-                SizeScale = 0.1
-                SpeedScale = 55
-            Case Else
-                TimerMsg.Interval = 5000
-                TimerInput.Interval = 9000
-                TimerJump.Interval = 2000
-                SizeScale = 0.18
-                SpeedScale = 35
+                levelJump = 50
+                levelMsgAttack = 45
+                levelInputAttack = 40
+                levelSmoke = 35
+                levelSummon = 30
+                levelSpeedUp = 25
+                levelSupMsgAttack = 20
+                levelMoreJump = 15
+                levelAttackFreq = 13
+                'ExtraSummon = 10
+                levelSupInputAttack = 5
+                'ExtraSummon = 4
         End Select
         FormReSize(Me)
     End Sub
@@ -211,104 +150,60 @@
 
     Private Sub SkillMsg(ByVal sender As Object, ByVal e As EventArgs) Handles TimerMsg.Tick
         Randomize()
-        If Val(Label1.Text) < 20 Then
-            Select Case Level
-                Case 1
-                    MsgBox("Message Box攻擊!!", 16, "攻擊")
-                Case 4
-                    MsgBox("不可能的任務之Message Box攻擊!!", 48 + 256, "攻擊")
-                    MsgBox("不可能的任務之Message Box攻擊!!", 48 + 256, "攻擊")
-                    MsgBox("不可能的任務之Message Box攻擊!!", 48 + 256, "攻擊")
-                    MsgBox("不可能的任務之Message Box攻擊!!", 48 + 256, "攻擊")
-                    MsgBox("不可能的任務之Message Box攻擊!!", 48 + 256, "攻擊")
-                Case Else
-                    MsgBox("超Message Box攻擊!!", 48 + 256, "攻擊")
-                    MsgBox("超Message Box攻擊!!", 48 + 256, "攻擊")
-                    MsgBox("超Message Box攻擊!!", 48 + 256, "攻擊")
-            End Select
-        ElseIf Val(Label1.Text) < 45 Then
-            Select Case Level
-                Case 4
-                    MsgBox("超Message Box攻擊!!", 48 + 256, "攻擊")
-                    MsgBox("超Message Box攻擊!!", 48 + 256, "攻擊")
-                    MsgBox("超Message Box攻擊!!", 48 + 256, "攻擊")
-                Case Else
-                    MsgBox("Message Box攻擊!!", 16, "攻擊")
-            End Select
+        If Level = 4 Then
+            If Val(Label1.Text) < levelSupMsgAttack Then
+                HellMsgBoxAttack()
+            ElseIf Val(Label1.Text) < levelMsgAttack Then
+                SuperMsgBoxAttack()
+            End If
+        Else
+            If Val(Label1.Text) < levelSupMsgAttack Then
+                SuperMsgBoxAttack()
+            ElseIf Val(Label1.Text) < levelMsgAttack Then
+                MsgBoxAttack()
+            End If
         End If
     End Sub
 
     Private Sub SkillInput(ByVal sender As Object, ByVal e As EventArgs) Handles TimerInput.Tick
         Randomize()
-        If Val(Label1.Text) < 13 Then
-            Select Case Level
-                Case 3
-                    InputBox("強Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
-                    InputBox("強Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
-                Case 4
-                    InputBox("超Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
-                    InputBox("超Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
-                    InputBox("超Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
-                Case Else
-                    InputBox("Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
-            End Select
-        ElseIf Val(Label1.Text) < 40 Then
-            Select Case Level
-                Case 4
-                    InputBox("強Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
-                    InputBox("強Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
-                Case Else
-                    InputBox("Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
-            End Select
+        If Val(Label1.Text) < levelSupInputAttack Then
+            If Level = 4 Then
+                HellInputBoxAttack()
+            Else
+                SuperInputBoxAttack()
+            End If
+        ElseIf Val(Label1.Text) < levelInputAttack Then
+            If Level = 4 Then
+                SuperInputBoxAttack()
+            Else
+                InputBoxAttack()
+            End If
         End If
     End Sub
-
+    Private Sub Summoning(ByVal sender As Object, ByVal e As EventArgs) Handles TimerSummon.Tick
+        Randomize()
+        If Val(Label1.Text) < levelSummon Then
+            FakeForm_Summon(fakeForms(1))
+        End If
+        If Level = 4 Then
+            If Val(Label1.Text) < 10 Then
+                FakeForm_Summon(fakeForms(2))
+            End If
+            If Val(Label1.Text) < 4 Then
+                FakeForm_Summon(fakeForms(3))
+                FakeForm_Summon(fakeForms(4))
+            End If
+        End If
+    End Sub
     Private Sub Jumping(ByVal sender As Object, ByVal e As EventArgs) Handles TimerJump.Tick
         Randomize()
-        Select Case Level
-            Case 1
-                If Val(Label1.Text) < 10 Then
-                    FakeForm_Summon(fakeForms(0), True)
-                End If
-                If Val(Label1.Text) < 35 Then
-                    SetDesktopLocation(Int(Rnd() * screenw), Int(Rnd() * screenh))
-                End If
-            Case 3
-                If Val(Label1.Text) < 10 Then
-                    FakeForm_Summon(fakeForms(1))
-                End If
-                If Val(Label1.Text) < 35 Then
-                    FakeForm_Summon(fakeForms(0), True)
-                    SetDesktopLocation(Int(Rnd() * screenw), Int(Rnd() * screenh))
-                End If
-            Case 4
-                If Val(Label1.Text) < 30 Then
-                    FakeForm_Summon(fakeForms(0))
-                End If
-                If Val(Label1.Text) < 10 Then
-                    FakeForm_Summon(fakeForms(1))
-                End If
-                If Val(Label1.Text) < 4 Then
-                    FakeForm_Summon(fakeForms(3))
-                End If
-                If Val(Label1.Text) < 35 Then
-                    FakeForm_Summon(fakeForms(2), True)
-                End If
-                If Val(Label1.Text) < 50 Then
-                    SetDesktopLocation(Int(Rnd() * screenw), Int(Rnd() * screenh))
-                End If
-            Case Else
-                If Val(Label1.Text) < 30 Then
-                    FakeForm_Summon(fakeForms(0), True)
-                End If
-                If Val(Label1.Text) < 10 Then
-                    FakeForm_Summon(fakeForms(1))
-                End If
-                If Val(Label1.Text) < 35 Then
-                    SetDesktopLocation(Int(Rnd() * screenw), Int(Rnd() * screenh))
-                End If
-        End Select
-
+        If Val(Label1.Text) < levelSmoke Then
+            FakeForm_Summon(fakeForms(0), True)
+        End If
+        If Val(Label1.Text) < levelJump Then
+            SetDesktopLocation(Int(Rnd() * screenw), Int(Rnd() * screenh))
+        End If
     End Sub
     Private Sub FakeForm_Summon(ByRef formAddr As FakeForm, Optional thisPosition As Boolean = False)
         If formAddr.Visible Then formAddr.Close()
@@ -316,6 +211,8 @@
         formAddr.Show()
         If thisPosition Then
             formAddr.SetDesktopLocation(Me.Location.X, Me.Location.Y)
+            formAddr.x_sign = x_sign
+            formAddr.y_sign = y_sign
         Else
             formAddr.SetDesktopLocation(Int(Rnd() * screenw), Int(Rnd() * screenh))
         End If

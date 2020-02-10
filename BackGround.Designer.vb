@@ -40,7 +40,7 @@ Partial Class BackGround
         '
         'Timer
         '
-        Me.Timer.Interval = 10
+        Me.Timer.Interval = 1000
         '
         'BackGround
         '

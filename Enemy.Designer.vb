@@ -28,6 +28,7 @@ Partial Class Enemy
         Me.TimerMsg = New System.Windows.Forms.Timer(Me.components)
         Me.TimerInput = New System.Windows.Forms.Timer(Me.components)
         Me.TimerJump = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerSummon = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'Label1
@@ -59,6 +60,11 @@ Partial Class Enemy
         Me.TimerJump.Enabled = True
         Me.TimerJump.Interval = 2000
         '
+        'TimerSummon
+        '
+        Me.TimerSummon.Enabled = True
+        Me.TimerSummon.Interval = 2000
+        '
         'Enemy
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -79,4 +85,5 @@ Partial Class Enemy
     Friend WithEvents TimerInput As System.Windows.Forms.Timer
     Friend WithEvents TimerJump As System.Windows.Forms.Timer
     Public WithEvents Label1 As Label
+    Friend WithEvents TimerSummon As Timer
 End Class

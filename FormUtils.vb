@@ -1,5 +1,5 @@
 ﻿Module FormUtils
-    Public Level As Short
+    Public Level As Short = 2
     Public screenw, screenh As Integer
     Public SpeedScale As Short
     Public SizeScale As Double = 0.15
@@ -22,12 +22,41 @@
         )
         If form.Location.X + form.Size.Width \ 2 > screenw And form.x_sign = 1 Then
             form.x_sign = -1
-        ElseIf form.Location.Y + form.Size.Height \ 2 > screenh And form.y_sign = 1 Then
+        End If
+        If form.Location.Y + form.Size.Height \ 2 > screenh And form.y_sign = 1 Then
             form.y_sign = -1
-        ElseIf form.Location.Y - form.Size.Height \ 2 < 0 And form.y_sign = -1 Then
+        End If
+        If form.Location.Y < 0 And form.y_sign = -1 Then
             form.y_sign = 1
-        ElseIf form.Location.X - form.Size.Width \ 2 < 0 And form.x_sign = -1 Then
+        End If
+        If form.Location.X < 0 And form.x_sign = -1 Then
             form.x_sign = 1
         End If
+    End Sub
+    Public Sub MsgBoxAttack()
+        MsgBox("Message Box攻擊!!", 16, "攻擊")
+    End Sub
+    Public Sub SuperMsgBoxAttack()
+        For i = 1 To 3
+            MsgBox("超Message Box攻擊!!", 48 + 256, "攻擊")
+        Next
+    End Sub
+    Public Sub HellMsgBoxAttack()
+        For i = 1 To 5
+            MsgBox("不可能的任務之Message Box攻擊!!", 48 + 256, "攻擊")
+        Next
+    End Sub
+    Public Sub InputBoxAttack()
+        InputBox("Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
+    End Sub
+    Public Sub SuperInputBoxAttack()
+        For i = 1 To 2
+            InputBox("強Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
+        Next
+    End Sub
+    Public Sub HellInputBoxAttack()
+        For i = 1 To 3
+            InputBox("超Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
+        Next
     End Sub
 End Module
