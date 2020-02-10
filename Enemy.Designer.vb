@@ -31,6 +31,7 @@ Partial Class Enemy
         Me.TimerSummon = New System.Windows.Forms.Timer(Me.components)
         Me.TimerHeal = New System.Windows.Forms.Timer(Me.components)
         Me.TimerHealEffect = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerBlock = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'Label1
@@ -77,6 +78,11 @@ Partial Class Enemy
         '
         Me.TimerHealEffect.Interval = 50
         '
+        'TimerBlock
+        '
+        Me.TimerBlock.Enabled = True
+        Me.TimerBlock.Interval = 7500
+        '
         'Enemy
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -87,6 +93,8 @@ Partial Class Enemy
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Enemy"
+        Me.ShowIcon = False
+        Me.ShowInTaskbar = False
         Me.Text = "我是表單"
         Me.TopMost = True
         Me.ResumeLayout(False)
@@ -100,4 +108,5 @@ Partial Class Enemy
     Friend WithEvents TimerSummon As Timer
     Friend WithEvents TimerHeal As Timer
     Friend WithEvents TimerHealEffect As Timer
+    Friend WithEvents TimerBlock As Timer
 End Class

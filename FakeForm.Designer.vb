@@ -26,6 +26,7 @@ Partial Class FakeForm
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TimerMove = New System.Windows.Forms.Timer(Me.components)
         Me.TimerJump = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerMsg = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'Label1
@@ -49,6 +50,11 @@ Partial Class FakeForm
         Me.TimerJump.Enabled = True
         Me.TimerJump.Interval = 5000
         '
+        'TimerMsg
+        '
+        Me.TimerMsg.Enabled = True
+        Me.TimerMsg.Interval = 5000
+        '
         'FakeForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -59,6 +65,8 @@ Partial Class FakeForm
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "FakeForm"
+        Me.ShowIcon = False
+        Me.ShowInTaskbar = False
         Me.Text = "我是表單"
         Me.TopMost = True
         Me.ResumeLayout(False)
@@ -67,4 +75,5 @@ Partial Class FakeForm
     Friend WithEvents TimerMove As System.Windows.Forms.Timer
     Public WithEvents Label1 As Label
     Friend WithEvents TimerJump As Timer
+    Friend WithEvents TimerMsg As Timer
 End Class

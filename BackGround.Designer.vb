@@ -53,6 +53,8 @@ Partial Class BackGround
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "BackGround"
+        Me.ShowIcon = False
+        Me.ShowInTaskbar = False
         Me.Text = "我是背景"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ResumeLayout(False)

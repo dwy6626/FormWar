@@ -5,8 +5,13 @@
     Public SizeScale As Double = 0.15
     ReadOnly FontSizeScale As Double = 0.4
     Public Sub FormReSize(ByRef form)
-        Dim width As Integer = Int(SizeScale * screenh)
-        Dim height As Integer = width - 10
+        Dim width, height As Integer
+        If screenh > screenw Then
+            width = Int(SizeScale * screenw)
+        Else
+            width = Int(SizeScale * screenh)
+        End If
+        height = width - 10
         form.Size = New Size(width, height)
         form.MaximumSize = form.Size
         form.MinimumSize = form.Size

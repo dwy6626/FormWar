@@ -100,6 +100,7 @@ Partial Class Difficulty
         Me.Controls.Add(Me.RadioEasy)
         Me.Controls.Add(Me.ButtonConfirm)
         Me.Name = "Difficulty"
+        Me.ShowIcon = False
         Me.Text = "難易度"
         Me.ResumeLayout(False)
         Me.PerformLayout()

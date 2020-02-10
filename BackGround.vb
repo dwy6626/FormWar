@@ -1,7 +1,12 @@
 ﻿Public Class BackGround
     Private time As Integer = 0
-    Private Sub Form2_Deactivate(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Deactivate
-        Me.Activate()
+    Private Sub Loading(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
+        Size = New Size(screenw, screenh)
+        MaximumSize = Size
+        MinimumSize = Size
+    End Sub
+    Private Sub SelfDeactivate(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Deactivate
+        Activate()
     End Sub
     Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer.Tick
         time += 1
