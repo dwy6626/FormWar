@@ -13,8 +13,13 @@
     ReadOnly maxKey As Byte = 10
     ReadOnly inputKeys As New List(Of String)
     ReadOnly keyCodeConverter As New KeysConverter
+    ReadOnly maxBlockNumber As Integer = 50
+    ReadOnly blinkBlocks(maxBlockNumber - 1) As Block
+    Private blockPtr As Integer = 0
+    Private blockX, blockY As Integer
     Private Sub Attacked(ByVal ByValsender As Object, ByVal e As EventArgs) Handles Label1.MouseClick,
         Label1.DoubleClick, Me.MouseClick, Me.DoubleClick
+        '1 -> 0: close all and show results 
         If Val(Label1.Text) = 1 Then
             If Block.Visible Then
                 Block.Close()
@@ -29,10 +34,13 @@
             Close()
             Results.Show()
             Results.SetDesktopLocation(screenw \ 2, screenh \ 2)
-        ElseIf Val(Label1.Text) = 50 Then
+        End If
+        '50 -> 49: start!
+        If Val(Label1.Text) = 50 Then
             BackGround.Timer.Enabled = True
             TimerMove.Enabled = True
         End If
+
         If Val(Label1.Text) = levelSpeedUp Then
             SpeedScale += 10
             levelSpeedUp = 0
@@ -46,6 +54,12 @@
             TimerInput.Interval *= 0.75
         End If
         Label1.Text = Val(Label1.Text) - 1
+        'Make all fake form < this form
+        For i = 0 To maxFormNumber - 1
+            If fakeForms(i).Visible And Val(fakeForms(i).Label1.Text) >= Val(Label1.Text) Then
+                fakeForms(i).Label1.Text = Int(Rnd() * Val(Label1.Text))
+            End If
+        Next
     End Sub
     Private Sub CheatKey(ByVal sender As Object, ByVal e As KeyEventArgs) Handles Me.KeyDown
         Dim checkStream As String = ""
@@ -90,7 +104,10 @@
         For i = 0 To maxFormNumber - 1
             fakeForms(i) = New FakeForm
         Next
-
+        For i = 0 To maxBlockNumber - 1
+            blinkBlocks(i) = New Block
+            blinkBlocks(i).Size = New Size(Size.Width \ 2, Size.Height \ 2)
+        Next
         Dim width As Integer = screenw \ 3
         Dim height As Integer = screenh \ 3
         Block.Size = New Size(width, height)
@@ -201,6 +218,38 @@
                 InputBoxAttack()
             End If
         End If
+    End Sub
+    Private Sub SkillBlockAttack(ByVal sender As Object, ByVal e As EventArgs) Handles TimerBlockAttack.Tick
+        Randomize()
+        blockX = Int(Rnd() * screenw \ 2)
+        blockY = Int(Rnd() * screenh \ 2)
+        TimerBlockStop.Enabled = True
+        TimerBlockBlink.Enabled = True
+        TimerBlockAttack.Enabled = False
+    End Sub
+    Private Sub SkillBlockBlink(ByVal sender As Object, ByVal e As EventArgs) Handles TimerBlockBlink.Tick
+        If blockPtr >= maxBlockNumber Then
+            blockPtr = 0
+        End If
+        If Not blinkBlocks(blockPtr).Visible Then
+            blinkBlocks(blockPtr) = New Block
+            blinkBlocks(blockPtr).Size = New Size(Size.Width \ 2, Size.Height \ 2)
+            blinkBlocks(blockPtr).Show()
+        End If
+        blinkBlocks(blockPtr).TimerClose.Enabled = True
+        blinkBlocks(blockPtr).BackColor = Color.FromArgb(
+                Int(Rnd() * 256), Int(Rnd() * 256), Int(Rnd() * 256)
+                )
+        blinkBlocks(blockPtr).SetDesktopLocation(
+            Int(blockX + Rnd() * screenw / 2),
+            Int(blockY + Rnd() * screenh / 2)
+        )
+        blockPtr += 1
+    End Sub
+    Private Sub SkillBlockStop(ByVal sender As Object, ByVal e As EventArgs) Handles TimerBlockStop.Tick
+        TimerBlockBlink.Enabled = False
+        TimerBlockStop.Enabled = False
+        TimerBlockAttack.Enabled = True
     End Sub
     Private Sub Summoning(ByVal sender As Object, ByVal e As EventArgs) Handles TimerSummon.Tick
         Randomize()

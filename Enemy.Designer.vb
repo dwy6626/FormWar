@@ -32,6 +32,9 @@ Partial Class Enemy
         Me.TimerHeal = New System.Windows.Forms.Timer(Me.components)
         Me.TimerHealEffect = New System.Windows.Forms.Timer(Me.components)
         Me.TimerBlock = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerBlockAttack = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerBlockStop = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerBlockBlink = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'Label1
@@ -83,6 +86,19 @@ Partial Class Enemy
         Me.TimerBlock.Enabled = True
         Me.TimerBlock.Interval = 7500
         '
+        'TimerBlockAttack
+        '
+        Me.TimerBlockAttack.Enabled = True
+        Me.TimerBlockAttack.Interval = 4500
+        '
+        'TimerBlockStop
+        '
+        Me.TimerBlockStop.Interval = 2000
+        '
+        'TimerBlockBlink
+        '
+        Me.TimerBlockBlink.Interval = 5
+        '
         'Enemy
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -109,4 +125,7 @@ Partial Class Enemy
     Friend WithEvents TimerHeal As Timer
     Friend WithEvents TimerHealEffect As Timer
     Friend WithEvents TimerBlock As Timer
+    Friend WithEvents TimerBlockAttack As Timer
+    Friend WithEvents TimerBlockStop As Timer
+    Friend WithEvents TimerBlockBlink As Timer
 End Class

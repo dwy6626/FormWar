@@ -22,7 +22,13 @@ Partial Class Block
     '請勿使用程式碼編輯器進行修改。
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Me.TimerClose = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
+        '
+        'TimerClose
+        '
+        Me.TimerClose.Interval = 400
         '
         'Block
         '
@@ -42,4 +48,6 @@ Partial Class Block
         Me.ResumeLayout(False)
 
     End Sub
+
+    Friend WithEvents TimerClose As Timer
 End Class
