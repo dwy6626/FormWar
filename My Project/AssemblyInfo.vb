@@ -11,8 +11,8 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("為了愛與和平奮鬥的表單辛酸史")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("表單大戰")> 
-<Assembly: AssemblyCopyright("Copyright ©  2013~  HSNU CRC")> 
+<Assembly: AssemblyProduct("表單大戰 Form War")> 
+<Assembly: AssemblyCopyright("HSNU CRC 2020~")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' 指定為預設值:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.3.1.2")> 
-<Assembly: AssemblyFileVersion("1.3.1.2")> 
+<Assembly: AssemblyVersion("1.4.5.3")> 
+<Assembly: AssemblyFileVersion("1.4.5.3")> 
