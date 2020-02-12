@@ -142,17 +142,17 @@
         Block.MaximumSize = Block.Size
         Block.MinimumSize = Block.Size
 
-        TimerMsg.Interval = 8000 - 1000 * Level
-        TimerInput.Interval = 15000 - 2000 * Level
+        TimerMsg.Interval = 7000 - 500 * Level
+        TimerInput.Interval = 13000 - 1000 * Level
         TimerJump.Interval = 4500 - 500 * Level
         TimerSummon.Interval = TimerJump.Interval * (10 - Level)
-        TimerHeal.Interval = 10000 - 5000 * Math.Max(Level - 3, 0)
+        TimerHeal.Interval = 12000 - 2000 * Math.Max(Level - 2, 0)
         TimerDoNotHeal.Interval = TimerHeal.Interval - 2500
         TimerBlockAttack.Interval = 7200 - 1000 * Level
         TimerBlockStop.Interval = 1000 + 500 * Level
 
         SizeScale = 0.19 - 0.02 * Math.Min(Level, 3)
-        SpeedScale = Int((0.25 + 0.04 * Level) * Size.Width)
+        SpeedScale = Int((0.28 + 0.02 * Level) * Size.Width)
 
         Select Case Level
             Case 1

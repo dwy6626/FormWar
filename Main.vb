@@ -4,11 +4,31 @@
     End Sub
 
     Private Sub Button3_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Button3.Click
-        MsgBox("規則很簡單：" & vbCrLf & vbCrLf & "開始遊戲後，你會看到一個表單，" & vbCrLf & "你的任務就是點那個表單，" & vbCrLf & "每點一下表單上的數字都會減一，" & vbCrLf & "你的任務就是讓表單上的數字歸零，" & vbCrLf & "隨著數字減少，難度也將增高，" & vbCrLf & "最後，不管再怎麼挫折，都要記住以下這句：" & vbCrLf & vbCrLf & "請好好愛惜你的電腦..." & vbCrLf & vbCrLf & "小建議：" & vbCrLf & "把除了本遊戲以外的視窗全部最小化，" & vbCrLf & "可以避免背景跑掉。" & vbCrLf & vbCrLf & "註：要關掉遊戲請善用工作管理員" & vbCrLf & "　　把處理程序裡的" & Chr(34) & "表單大戰" & Chr(34) & "關閉即可", , "說明")
+        MsgBox("規則很簡單：
+
+開始遊戲後
+你會看到一個表單（視窗）
+你的任務就是點那個表單
+每點一下表單上的數字都會 -1
+你的任務就是讓表單上的數字歸零
+
+隨著數字減少
+難度也將增高
+善用你的智慧與反應來通關吧！
+
+
+最後，不管再怎麼挫折，都要記住以下這句：
+「螢幕是無辜的，請不要砸他。」
+
+啊還有，
+「滑鼠跟鍵盤也是。」
+
+
+註：要關掉遊戲請善用工作管理員", Title:="說明")
     End Sub
 
     Private Sub Button1_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Button1.Click
-        If MsgBox("準備好要開始這場" & Chr(22) & "表單大戰" & Chr(22) & "了嗎??", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+        If MsgBox("準備好要開始這場「表單大戰」了嗎？", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             BackGround.Show()
             Enemy.SetDesktopLocation(screenw \ 2, screenh \ 2)
             Me.Hide()
@@ -24,7 +44,7 @@
         Shell("cmd.exe /c start " & "https://dwy6626.github.io")
     End Sub
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        screenw = Screen.PrimaryScreen.Bounds.Width - 110
-        screenh = Screen.PrimaryScreen.Bounds.Height - 110
+        screenw = Screen.PrimaryScreen.Bounds.Width
+        screenh = Screen.PrimaryScreen.Bounds.Height
     End Sub
 End Class

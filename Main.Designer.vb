@@ -83,12 +83,12 @@ Partial Class Main
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("微軟正黑體", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.Blue
-        Me.Label1.Location = New System.Drawing.Point(169, 290)
+        Me.Label1.ForeColor = System.Drawing.Color.CornflowerBlue
+        Me.Label1.Location = New System.Drawing.Point(251, 288)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(120, 21)
+        Me.Label1.Size = New System.Drawing.Size(33, 21)
         Me.Label1.TabIndex = 4
-        Me.Label1.Text = "Made by YDW"
+        Me.Label1.Text = "dw"
         '
         'Label2
         '
@@ -132,7 +132,7 @@ Partial Class Main
         Me.MaximumSize = New System.Drawing.Size(300, 350)
         Me.MinimumSize = New System.Drawing.Size(300, 350)
         Me.Name = "Main"
-        Me.Text = "表單大戰!!"
+        Me.Text = "表單大戰 Form War"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()

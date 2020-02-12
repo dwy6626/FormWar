@@ -25,10 +25,10 @@
             form.Location.X + form.x_sign * SpeedScale,
             form.Location.Y + form.y_sign * SpeedScale
         )
-        If form.Location.X + form.Size.Width \ 2 > screenw And form.x_sign = 1 Then
+        If form.Location.X + form.Size.Width > screenw And form.x_sign = 1 Then
             form.x_sign = -1
         End If
-        If form.Location.Y + form.Size.Height \ 2 > screenh And form.y_sign = 1 Then
+        If form.Location.Y + form.Size.Height > screenh And form.y_sign = 1 Then
             form.y_sign = -1
         End If
         If form.Location.Y < 0 And form.y_sign = -1 Then
@@ -52,16 +52,16 @@
         Next
     End Sub
     Public Sub InputBoxAttack()
-        InputBox("Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
+        InputBox("Input Box攻擊!!", "攻擊", XPos:=Int(Rnd() * screenw) - 100, YPos:=Int(Rnd() * screenh))
     End Sub
     Public Sub SuperInputBoxAttack()
         For i = 1 To 2
-            InputBox("強Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
+            InputBox("強Input Box攻擊!!", "攻擊", XPos:=Int(Rnd() * screenw) - 100, YPos:=Int(Rnd() * screenh))
         Next
     End Sub
     Public Sub HellInputBoxAttack()
         For i = 1 To 3
-            InputBox("超Input Box攻擊!!", "攻擊", , Int(Rnd() * screenw) - 100, Int(Rnd() * screenh))
+            InputBox("超Input Box攻擊!!", "攻擊", XPos:=Int(Rnd() * screenw) - 100, YPos:=Int(Rnd() * screenh))
         Next
     End Sub
 End Module
