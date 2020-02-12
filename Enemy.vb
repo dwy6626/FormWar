@@ -5,7 +5,7 @@
     Public levelJump, levelSmoke, levelSummon, levelHeal,
         levelMsgAttack, levelInputAttack, levelSupMsgAttack, levelSupInputAttack,
         levelSpeedUp, levelMoreJump, levelAttackFreq,
-        levelFakeFormAttack, levelBlock As Byte
+        levelFakeFormAttack, levelBlock, levelBlockBlink As Byte
     Public HealCount As Byte = 0
     ReadOnly maxFormNumber As Byte = 5
     'Basic: a(x) is of length x+1
@@ -19,47 +19,85 @@
     Private blockX, blockY As Integer
     Private Sub Attacked(ByVal ByValsender As Object, ByVal e As EventArgs) Handles Label1.MouseClick,
         Label1.DoubleClick, Me.MouseClick, Me.DoubleClick
-        '1 -> 0: close all and show results 
-        If Val(Label1.Text) = 1 Then
-            If Block.Visible Then
-                Block.Close()
+        Label1.Text = Val(Label1.Text) - 1
+    End Sub
+    Private Sub Label1_TextChanged(sender As Object, e As EventArgs) Handles Label1.TextChanged
+        If Visible Then
+            '1 -> 0: close all and show results 
+            'unidirectional
+            If Val(Label1.Text) = 0 Then
+                Close()
+                Exit Sub
             End If
-            BackGround.Timer.Enabled = False
-            Hide()
+
+            '50 -> 49: start!
+            TimerMove.Enabled = Val(Label1.Text) < 50
+            If Val(Label1.Text) < 50 Then
+                BackGround.Timer.Enabled = True
+            End If
+
+            'Change and enable only
+            TimerMsg.Enabled = Val(Label1.Text) < Math.Max(levelMsgAttack, levelSupMsgAttack)
+            TimerInput.Enabled = Val(Label1.Text) < Math.Max(levelInputAttack, levelSupInputAttack)
+            TimerJump.Enabled = Val(Label1.Text) < levelJump
+
+            'Change to trigger
+            If Val(Label1.Text) < levelSummon Then
+                If Not TimerSummon.Enabled Then
+                    Summoning(Nothing, Nothing)
+                    TimerSummon.Enabled = True
+                End If
+            Else
+                TimerSummon.Enabled = False
+            End If
+            If Val(Label1.Text) < levelHeal Then
+                If Not TimerHeal.Enabled Then
+                    Healing(Nothing, Nothing)
+                    TimerHeal.Enabled = True
+                End If
+            Else
+                TimerHeal.Enabled = False
+            End If
+            If Val(Label1.Text) < levelBlock Then
+                If Not TimerBlock.Enabled Then
+                    BlockSummon(Nothing, Nothing)
+                    TimerBlock.Enabled = True
+                End If
+            Else
+                BlockClose()
+                TimerBlock.Enabled = False
+            End If
+            If Val(Label1.Text) < levelBlockBlink Then
+                If Not TimerBlockAttack.Enabled Then
+                    SkillBlockAttack(Nothing, Nothing)
+                    TimerBlockAttack.Enabled = True
+                End If
+            Else
+                TimerBlockAttack.Enabled = False
+            End If
+
+            'Change once and disable check
+            If Val(Label1.Text) < levelSpeedUp Then
+                SpeedScale *= 1.5
+                levelSpeedUp = 0
+            End If
+            If Val(Label1.Text) < levelMoreJump Then
+                TimerJump.Interval *= 0.5
+                levelMoreJump = 0
+            End If
+            If Val(Label1.Text) < levelAttackFreq Then
+                TimerMsg.Interval *= 0.75
+                TimerInput.Interval *= 0.75
+                levelAttackFreq = 0
+            End If
+
+            'Make all fake form < this form
             For i = 0 To maxFormNumber - 1
-                If fakeForms(i).Visible Then
-                    fakeForms(i).Close()
+                If fakeForms(i).Visible And Val(fakeForms(i).Label1.Text) >= Val(Label1.Text) Then
+                    fakeForms(i).Label1.Text = Int(Rnd() * Val(Label1.Text))
                 End If
             Next
-            Close()
-            Results.Show()
-            Results.SetDesktopLocation(screenw \ 2, screenh \ 2)
         End If
-        '50 -> 49: start!
-        If Val(Label1.Text) = 50 Then
-            BackGround.Timer.Enabled = True
-            TimerMove.Enabled = True
-        End If
-
-        If Val(Label1.Text) = levelSpeedUp Then
-            SpeedScale += 10
-            levelSpeedUp = 0
-        End If
-        If Val(Label1.Text) = levelMoreJump Then
-            TimerJump.Interval *= 0.75
-            levelMoreJump = 0
-        End If
-        If Val(Label1.Text) = levelAttackFreq Then
-            TimerMsg.Interval *= 0.75
-            TimerInput.Interval *= 0.75
-        End If
-        Label1.Text = Val(Label1.Text) - 1
-        'Make all fake form < this form
-        For i = 0 To maxFormNumber - 1
-            If fakeForms(i).Visible And Val(fakeForms(i).Label1.Text) >= Val(Label1.Text) Then
-                fakeForms(i).Label1.Text = Int(Rnd() * Val(Label1.Text))
-            End If
-        Next
     End Sub
     Private Sub CheatKey(ByVal sender As Object, ByVal e As KeyEventArgs) Handles Me.KeyDown
         Dim checkStream As String = ""
@@ -81,18 +119,8 @@
         ElseIf checkStream.Contains("SLOWDOWN") Then
             SpeedScale /= 1.5
             inputKeys.Clear()
-        ElseIf checkStream.Contains("THEWORLD") Then
-            Dim toBool = Not TimerMsg.Enabled
-            TimerMsg.Enabled = toBool
-            TimerMove.Enabled = toBool
-            TimerInput.Enabled = toBool
-            TimerJump.Enabled = toBool
-            TimerSummon.Enabled = toBool
-            TimerHeal.Enabled = toBool
-            TimerBlock.Enabled = toBool
-            For i = 0 To maxFormNumber - 1
-                fakeForms(i).TimerMsg.Enabled = toBool
-            Next
+        ElseIf checkStream.Contains("REDO") Then
+            Label1.Text = "50"
             inputKeys.Clear()
         ElseIf checkStream.Contains("CRSCBEST") Then
             Label1.Text = "1"
@@ -116,71 +144,79 @@
 
         TimerMsg.Interval = 8000 - 1000 * Level
         TimerInput.Interval = 15000 - 2000 * Level
-        TimerJump.Interval = 5500 - 500 * Level
+        TimerJump.Interval = 4500 - 500 * Level
         TimerSummon.Interval = TimerJump.Interval * (10 - Level)
         TimerHeal.Interval = 10000 - 5000 * Math.Max(Level - 3, 0)
+        TimerDoNotHeal.Interval = TimerHeal.Interval - 2500
+        TimerBlockAttack.Interval = 7200 - 1000 * Level
+        TimerBlockStop.Interval = 1000 + 500 * Level
 
-        SizeScale = 0.27 - 0.03 * Level
-        SpeedScale = 25 + 5 * Level
+        SizeScale = 0.19 - 0.02 * Math.Min(Level, 3)
+        SpeedScale = Int((0.25 + 0.04 * Level) * Size.Width)
 
         Select Case Level
             Case 1
                 levelMsgAttack = 40
                 levelJump = 35
                 levelSpeedUp = 25
-                levelMoreJump = 15
-                levelSmoke = 10
-                levelInputAttack = 5
+                levelMoreJump = 20
+                levelSmoke = 15
+                levelInputAttack = 10
+                levelHeal = 5
+                levelAttackFreq = 5
                 levelSummon = 0
                 levelFakeFormAttack = 0
                 levelSupMsgAttack = 0
                 levelSupInputAttack = 0
-                levelHeal = 0
                 levelBlock = 0
+                levelBlockBlink = 0
             Case 2
                 levelMsgAttack = 45
-                levelInputAttack = 40
-                levelJump = 35
+                levelJump = 40
+                levelInputAttack = 35
                 levelSmoke = 30
                 levelSpeedUp = 25
-                levelSupMsgAttack = 20
-                levelMoreJump = 15
-                levelSummon = 10
+                levelAttackFreq = 25
+                levelSummon = 20
+                levelMoreJump = 20
+                levelBlockBlink = 15
                 levelHeal = 10
-                levelAttackFreq = 5
+                levelBlock = 10
+                levelSupMsgAttack = 5
+                levelSupInputAttack = 3
                 levelFakeFormAttack = 0
-                levelSupInputAttack = 0
-                levelBlock = 0
             Case 3
                 levelMsgAttack = 45
-                levelInputAttack = 40
-                levelJump = 35
+                levelJump = 45
+                levelInputAttack = 35
                 levelSmoke = 35
                 levelSummon = 30
                 levelSpeedUp = 25
-                levelSupMsgAttack = 20
-                levelMoreJump = 15
-                levelAttackFreq = 15
-                levelHeal = 10
-                levelBlock = 8
-                levelSupInputAttack = 5
-                levelFakeFormAttack = 5
+                levelAttackFreq = 25
+                levelMoreJump = 20
+                levelFakeFormAttack = 20
+                levelHeal = 15
+                levelBlockBlink = 15
+                levelBlock = 10
+                levelSupMsgAttack = 5
+                levelSupInputAttack = 3
             Case 4
                 levelJump = 50
                 levelHeal = 50
-                levelMsgAttack = 45
-                levelInputAttack = 40
-                levelSmoke = 35
-                levelSummon = 30
-                levelSpeedUp = 25
-                levelSupMsgAttack = 20
-                levelMoreJump = 15
-                levelAttackFreq = 15
-                levelBlock = 13
+                levelMsgAttack = 50
+                levelInputAttack = 45
+                levelSmoke = 40
+                levelSummon = 35
+                levelFakeFormAttack = 30
+                levelMoreJump = 25
+                levelAttackFreq = 20
+                levelBlockBlink = 20
+                levelBlock = 15
                 'ExtraSummon = 10
-                levelSupInputAttack = 8
-                'ExtraSummon = 3
-                levelFakeFormAttack = 5
+                levelSpeedUp = 8
+                levelSupMsgAttack = 5
+                'ExtraSummon = 5
+                levelSupInputAttack = 3
         End Select
         FormReSize(Me)
     End Sub
@@ -192,13 +228,13 @@
         If Level = 4 Then
             If Val(Label1.Text) < levelSupMsgAttack Then
                 HellMsgBoxAttack()
-            ElseIf Val(Label1.Text) < levelMsgAttack Then
+            Else
                 SuperMsgBoxAttack()
             End If
         Else
             If Val(Label1.Text) < levelSupMsgAttack Then
                 SuperMsgBoxAttack()
-            ElseIf Val(Label1.Text) < levelMsgAttack Then
+            Else
                 MsgBoxAttack()
             End If
         End If
@@ -211,7 +247,7 @@
             Else
                 SuperInputBoxAttack()
             End If
-        ElseIf Val(Label1.Text) < levelInputAttack Then
+        Else
             If Level = 4 Then
                 SuperInputBoxAttack()
             Else
@@ -225,7 +261,6 @@
         blockY = Int(Rnd() * screenh \ 2)
         TimerBlockStop.Enabled = True
         TimerBlockBlink.Enabled = True
-        TimerBlockAttack.Enabled = False
     End Sub
     Private Sub SkillBlockBlink(ByVal sender As Object, ByVal e As EventArgs) Handles TimerBlockBlink.Tick
         If blockPtr >= maxBlockNumber Then
@@ -249,18 +284,15 @@
     Private Sub SkillBlockStop(ByVal sender As Object, ByVal e As EventArgs) Handles TimerBlockStop.Tick
         TimerBlockBlink.Enabled = False
         TimerBlockStop.Enabled = False
-        TimerBlockAttack.Enabled = True
     End Sub
     Private Sub Summoning(ByVal sender As Object, ByVal e As EventArgs) Handles TimerSummon.Tick
         Randomize()
-        If Val(Label1.Text) < levelSummon Then
-            FakeForm_Summon(fakeForms(1))
-        End If
+        FakeForm_Summon(fakeForms(1))
         If Level = 4 Then
             If Val(Label1.Text) < 10 Then
                 FakeForm_Summon(fakeForms(2))
             End If
-            If Val(Label1.Text) < 3 Then
+            If Val(Label1.Text) < 5 Then
                 FakeForm_Summon(fakeForms(3))
                 FakeForm_Summon(fakeForms(4))
             End If
@@ -271,15 +303,17 @@
         If Val(Label1.Text) < levelSmoke Then
             FakeForm_Summon(fakeForms(0), True)
         End If
-        If Val(Label1.Text) < levelJump Then
-            SetDesktopLocation(Int(Rnd() * screenw), Int(Rnd() * screenh))
-        End If
+        SetDesktopLocation(Int(Rnd() * screenw), Int(Rnd() * screenh))
     End Sub
     Private Sub Healing(ByVal sender As Object, ByVal e As EventArgs) Handles TimerHeal.Tick
-        If Val(Label1.Text) < levelHeal Then
+        If Not TimerDoNotHeal.Enabled Then
             HealCount = 0
             TimerHealEffect.Enabled = True
+            TimerDoNotHeal.Enabled = True
         End If
+    End Sub
+    Private Sub TimerDoNotHeal_Tick(sender As Object, e As EventArgs) Handles TimerDoNotHeal.Tick
+        TimerDoNotHeal.Enabled = False
     End Sub
     Private Sub HealEffect(ByVal sender As Object, ByVal e As EventArgs) Handles TimerHealEffect.Tick
         If HealCount Mod 2 = 1 Then
@@ -296,13 +330,18 @@
         End If
     End Sub
     Private Sub BlockSummon(ByVal sender As Object, ByVal e As EventArgs) Handles TimerBlock.Tick
-        If Not Block.Visible And Val(Label1.Text) < levelBlock Then
+        If Not Block.Visible Then
             Block.Show()
         End If
         Block.SetDesktopLocation(
             Int(Rnd() * (screenw - Block.Size.Width)),
             Int(Rnd() * (screenh - Block.Size.Height))
         )
+    End Sub
+    Private Sub BlockClose()
+        If Block.Visible Then
+            Block.Close()
+        End If
     End Sub
     Private Sub FakeForm_Summon(ByRef formAddr As FakeForm, Optional thisPosition As Boolean = False)
         If Not formAddr.Visible Then
@@ -317,5 +356,22 @@
             formAddr.x_sign = x_sign
             formAddr.y_sign = y_sign
         End If
+    End Sub
+
+    Private Sub Enemy_Closed(sender As Object, e As EventArgs) Handles Me.Closing
+        BackGround.Timer.Enabled = False
+        TimerBlockBlink.Enabled = False
+        TimerBlock.Enabled = False
+        TimerInput.Enabled = False
+        TimerMsg.Enabled = False
+        TimerHeal.Enabled = False
+        BlockClose()
+        For i = 0 To maxFormNumber - 1
+            If fakeForms(i).Visible Then
+                fakeForms(i).Close()
+            End If
+        Next
+        Results.Show()
+        Results.SetDesktopLocation(screenw \ 2, screenh \ 2)
     End Sub
 End Class

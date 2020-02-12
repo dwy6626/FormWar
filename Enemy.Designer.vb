@@ -35,6 +35,7 @@ Partial Class Enemy
         Me.TimerBlockAttack = New System.Windows.Forms.Timer(Me.components)
         Me.TimerBlockStop = New System.Windows.Forms.Timer(Me.components)
         Me.TimerBlockBlink = New System.Windows.Forms.Timer(Me.components)
+        Me.TimerDoNotHeal = New System.Windows.Forms.Timer(Me.components)
         Me.SuspendLayout()
         '
         'Label1
@@ -54,27 +55,22 @@ Partial Class Enemy
         '
         'TimerMsg
         '
-        Me.TimerMsg.Enabled = True
         Me.TimerMsg.Interval = 5000
         '
         'TimerInput
         '
-        Me.TimerInput.Enabled = True
         Me.TimerInput.Interval = 9000
         '
         'TimerJump
         '
-        Me.TimerJump.Enabled = True
         Me.TimerJump.Interval = 2000
         '
         'TimerSummon
         '
-        Me.TimerSummon.Enabled = True
         Me.TimerSummon.Interval = 2000
         '
         'TimerHeal
         '
-        Me.TimerHeal.Enabled = True
         Me.TimerHeal.Interval = 10000
         '
         'TimerHealEffect
@@ -83,13 +79,11 @@ Partial Class Enemy
         '
         'TimerBlock
         '
-        Me.TimerBlock.Enabled = True
         Me.TimerBlock.Interval = 7500
         '
         'TimerBlockAttack
         '
-        Me.TimerBlockAttack.Enabled = True
-        Me.TimerBlockAttack.Interval = 4500
+        Me.TimerBlockAttack.Interval = 6500
         '
         'TimerBlockStop
         '
@@ -98,6 +92,10 @@ Partial Class Enemy
         'TimerBlockBlink
         '
         Me.TimerBlockBlink.Interval = 5
+        '
+        'TimerDoNotHeal
+        '
+        Me.TimerDoNotHeal.Interval = 7000
         '
         'Enemy
         '
@@ -128,4 +126,5 @@ Partial Class Enemy
     Friend WithEvents TimerBlockAttack As Timer
     Friend WithEvents TimerBlockStop As Timer
     Friend WithEvents TimerBlockBlink As Timer
+    Friend WithEvents TimerDoNotHeal As Timer
 End Class
