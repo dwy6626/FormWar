@@ -13,7 +13,7 @@
     ReadOnly maxKey As Byte = 10
     ReadOnly inputKeys As New List(Of String)
     ReadOnly keyCodeConverter As New KeysConverter
-    ReadOnly maxBlockNumber As Integer = 30
+    ReadOnly maxBlockNumber As Integer = 20
     ReadOnly blinkBlocks(maxBlockNumber - 1) As Block
     Private blockPtr As Integer = 0
     Private blockX, blockY As Integer
@@ -185,9 +185,9 @@
                 levelMoreJump = 20
                 levelBlockBlink = 15
                 levelHeal = 10
-                levelBlock = 10
                 levelSupMsgAttack = 5
                 levelSupInputAttack = 3
+                levelBlock = 0
                 levelFakeFormAttack = 0
             Case 3
                 levelMsgAttack = 45
