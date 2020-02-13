@@ -23,11 +23,17 @@
         FormMove(Me)
     End Sub
     Private Sub Jumping(ByVal sender As Object, ByVal e As EventArgs) Handles TimerJump.Tick
+        If Enemy.theWorld Then
+            Exit Sub
+        End If
         Randomize()
         SetDesktopLocation(Int(Rnd() * screenw), Int(Rnd() * screenh))
         TimerJump.Interval = Int(Enemy.TimerJump.Interval * (Rnd() * 0.5 + 1))
     End Sub
     Private Sub SkillMsg(ByVal sender As Object, ByVal e As EventArgs) Handles TimerMsg.Tick
+        If Enemy.theWorld Then
+            Exit Sub
+        End If
         If Val(Enemy.Label1.Text) < Enemy.levelFakeFormAttack And Me.Visible Then
             MsgBoxAttack()
             TimerMsg.Interval = Int(Enemy.TimerMsg.Interval * (Rnd() * 0.5 + 2))

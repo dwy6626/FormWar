@@ -20,6 +20,9 @@
         form.Label1.Font = New Font("Arial", Int(FontSizeScale * width))
     End Sub
     Public Sub FormMove(ByRef form)
+        If Enemy.theWorld Then
+            Exit Sub
+        End If
         Randomize()
         form.SetDesktopLocation(
             form.Location.X + form.x_sign * SpeedScale,

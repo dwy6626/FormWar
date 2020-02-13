@@ -13,10 +13,11 @@
     ReadOnly maxKey As Byte = 10
     ReadOnly inputKeys As New List(Of String)
     ReadOnly keyCodeConverter As New KeysConverter
-    ReadOnly maxBlockNumber As Integer = 50
+    ReadOnly maxBlockNumber As Integer = 30
     ReadOnly blinkBlocks(maxBlockNumber - 1) As Block
     Private blockPtr As Integer = 0
     Private blockX, blockY As Integer
+    Public theWorld As Boolean = False
     Private Sub Attacked(ByVal ByValsender As Object, ByVal e As EventArgs) Handles Label1.MouseClick,
         Label1.DoubleClick, Me.MouseClick, Me.DoubleClick
         Label1.Text = Val(Label1.Text) - 1
@@ -125,6 +126,9 @@
         ElseIf checkStream.Contains("CRSCBEST") Then
             Label1.Text = "1"
             inputKeys.Clear()
+        ElseIf checkStream.Contains("THEWORLD") Then
+            theWorld = Not theWorld
+            inputKeys.Clear()
         End If
     End Sub
 
@@ -225,6 +229,9 @@
     End Sub
 
     Private Sub SkillMsg(ByVal sender As Object, ByVal e As EventArgs) Handles TimerMsg.Tick
+        If theWorld Then
+            Exit Sub
+        End If
         If Level = 4 Then
             If Val(Label1.Text) < levelSupMsgAttack Then
                 HellMsgBoxAttack()
@@ -241,6 +248,9 @@
     End Sub
 
     Private Sub SkillInput(ByVal sender As Object, ByVal e As EventArgs) Handles TimerInput.Tick
+        If theWorld Then
+            Exit Sub
+        End If
         If Val(Label1.Text) < levelSupInputAttack Then
             If Level = 4 Then
                 HellInputBoxAttack()
@@ -256,6 +266,9 @@
         End If
     End Sub
     Private Sub SkillBlockAttack(ByVal sender As Object, ByVal e As EventArgs) Handles TimerBlockAttack.Tick
+        If theWorld Then
+            Exit Sub
+        End If
         Randomize()
         blockX = Int(Rnd() * screenw \ 2)
         blockY = Int(Rnd() * screenh \ 2)
@@ -286,6 +299,9 @@
         TimerBlockStop.Enabled = False
     End Sub
     Private Sub Summoning(ByVal sender As Object, ByVal e As EventArgs) Handles TimerSummon.Tick
+        If theWorld Then
+            Exit Sub
+        End If
         Randomize()
         FakeForm_Summon(fakeForms(1))
         If Level = 4 Then
@@ -299,6 +315,9 @@
         End If
     End Sub
     Private Sub Jumping(ByVal sender As Object, ByVal e As EventArgs) Handles TimerJump.Tick
+        If theWorld Then
+            Exit Sub
+        End If
         Randomize()
         If Val(Label1.Text) < levelSmoke Then
             FakeForm_Summon(fakeForms(0), True)
@@ -306,6 +325,9 @@
         SetDesktopLocation(Int(Rnd() * screenw), Int(Rnd() * screenh))
     End Sub
     Private Sub Healing(ByVal sender As Object, ByVal e As EventArgs) Handles TimerHeal.Tick
+        If theWorld Then
+            Exit Sub
+        End If
         If Not TimerDoNotHeal.Enabled Then
             HealCount = 0
             TimerHealEffect.Enabled = True
@@ -330,6 +352,9 @@
         End If
     End Sub
     Private Sub BlockSummon(ByVal sender As Object, ByVal e As EventArgs) Handles TimerBlock.Tick
+        If theWorld Then
+            Exit Sub
+        End If
         If Not Block.Visible Then
             Block.Show()
         End If
@@ -344,6 +369,9 @@
         End If
     End Sub
     Private Sub FakeForm_Summon(ByRef formAddr As FakeForm, Optional thisPosition As Boolean = False)
+        If theWorld Then
+            Exit Sub
+        End If
         If Not formAddr.Visible Then
             formAddr = New FakeForm
             formAddr.Show()
