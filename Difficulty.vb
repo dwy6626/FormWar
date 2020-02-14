@@ -13,6 +13,10 @@
     End Sub
 
     Private Sub Form7_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
+        SetDesktopLocation(
+            (screenw - Size.Width) \ 2,
+            (screenh - Size.Height) \ 2
+        )
         Select Case Level
             Case 0 : RadioMedium.Checked = 1
             Case 1 : RadioEasy.Checked = 1

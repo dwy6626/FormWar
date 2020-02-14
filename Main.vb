@@ -30,7 +30,6 @@
     Private Sub Button1_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Button1.Click
         If MsgBox("準備好要開始這場「表單大戰」了嗎？", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
             BackGround.Show()
-            Enemy.SetDesktopLocation(screenw \ 2, screenh \ 2)
             Me.Hide()
             Enemy.Show()
         End If
@@ -46,5 +45,9 @@
     Private Sub Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         screenw = Screen.PrimaryScreen.Bounds.Width
         screenh = Screen.PrimaryScreen.Bounds.Height
+        SetDesktopLocation(
+            (screenw - Size.Width) \ 2,
+            (screenh - Size.Height) \ 2
+        )
     End Sub
 End Class

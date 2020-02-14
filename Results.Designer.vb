@@ -28,20 +28,24 @@ Partial Class Results
         '
         'LabelAward
         '
-        Me.LabelAward.AutoSize = True
-        Me.LabelAward.Location = New System.Drawing.Point(31, 9)
+        Me.LabelAward.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.LabelAward.Location = New System.Drawing.Point(12, 9)
         Me.LabelAward.Name = "LabelAward"
-        Me.LabelAward.Size = New System.Drawing.Size(0, 12)
+        Me.LabelAward.Size = New System.Drawing.Size(588, 495)
         Me.LabelAward.TabIndex = 0
+        Me.LabelAward.Text = "1111"
+        Me.LabelAward.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'LabelClose
         '
+        Me.LabelClose.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.LabelClose.AutoSize = True
-        Me.LabelClose.Font = New System.Drawing.Font("微軟正黑體", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.LabelClose.Font = New System.Drawing.Font("微軟正黑體", 15.0!, System.Drawing.FontStyle.Bold)
         Me.LabelClose.ForeColor = System.Drawing.Color.Navy
-        Me.LabelClose.Location = New System.Drawing.Point(67, 216)
+        Me.LabelClose.Location = New System.Drawing.Point(211, 504)
         Me.LabelClose.Name = "LabelClose"
-        Me.LabelClose.Size = New System.Drawing.Size(112, 17)
+        Me.LabelClose.Size = New System.Drawing.Size(172, 25)
         Me.LabelClose.TabIndex = 1
         Me.LabelClose.Text = "滑鼠雙擊此處關閉"
         '
@@ -49,14 +53,14 @@ Partial Class Results
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(256, 241)
+        Me.ClientSize = New System.Drawing.Size(612, 538)
         Me.ControlBox = False
         Me.Controls.Add(Me.LabelClose)
         Me.Controls.Add(Me.LabelAward)
         Me.MaximizeBox = False
-        Me.MaximumSize = New System.Drawing.Size(272, 280)
+        Me.MaximumSize = New System.Drawing.Size(628, 577)
         Me.MinimizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(272, 280)
+        Me.MinimumSize = New System.Drawing.Size(628, 577)
         Me.Name = "Results"
         Me.Text = "過關獎勵"
         Me.TopMost = True

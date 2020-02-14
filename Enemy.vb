@@ -79,7 +79,11 @@
 
             'Change once and disable check
             If Val(Label1.Text) < levelSpeedUp Then
-                SpeedScale *= 1.5
+                If Level = 4 Then
+                    SpeedScale *= 1.25
+                Else
+                    SpeedScale *= 1.5
+                End If
                 levelSpeedUp = 0
             End If
             If Val(Label1.Text) < levelMoreJump Then
@@ -150,9 +154,9 @@
         TimerInput.Interval = 13000 - 1000 * Level
         TimerJump.Interval = 4500 - 500 * Level
         TimerSummon.Interval = TimerJump.Interval * (10 - Level)
-        TimerHeal.Interval = 12000 - 2000 * Math.Max(Level - 2, 0)
+        TimerHeal.Interval = 13000
         TimerDoNotHeal.Interval = TimerHeal.Interval - 2500
-        TimerBlockAttack.Interval = 7200 - 1000 * Level
+        TimerBlockAttack.Interval = 11200 - 2000 * Level
         TimerBlockStop.Interval = 1000 + 500 * Level
 
         SizeScale = 0.19 - 0.02 * Math.Min(Level, 3)
@@ -223,6 +227,7 @@
                 levelSupInputAttack = 3
         End Select
         FormReSize(Me)
+        SetDesktopLocation(screenw \ 2, screenh \ 2)
     End Sub
     Private Sub Moving(ByVal sender As Object, ByVal e As EventArgs) Handles TimerMove.Tick
         FormMove(Me)
@@ -400,6 +405,9 @@
             End If
         Next
         Results.Show()
-        Results.SetDesktopLocation(screenw \ 2, screenh \ 2)
+        Results.SetDesktopLocation(
+            (screenw - Results.Size.Width) \ 2,
+            (screenh - Results.Size.Height) \ 2
+        )
     End Sub
 End Class
