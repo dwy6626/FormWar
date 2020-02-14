@@ -28,12 +28,11 @@ Partial Class Block
         '
         'TimerClose
         '
-        Me.TimerClose.Interval = 400
+        Me.TimerClose.Interval = 200
         '
         'Block
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.BackColor = System.Drawing.Color.Red
         Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.ControlBox = False

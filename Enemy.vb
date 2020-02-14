@@ -13,7 +13,7 @@
     ReadOnly maxKey As Byte = 10
     ReadOnly inputKeys As New List(Of String)
     ReadOnly keyCodeConverter As New KeysConverter
-    ReadOnly maxBlockNumber As Integer = 20
+    ReadOnly maxBlockNumber As Integer = 15
     ReadOnly blinkBlocks(maxBlockNumber - 1) As Block
     Private blockPtr As Integer = 0
     Private blockX, blockY As Integer
@@ -286,7 +286,7 @@
         End If
         If Not blinkBlocks(blockPtr).Visible Then
             blinkBlocks(blockPtr) = New Block
-            blinkBlocks(blockPtr).Size = New Size(Size.Width \ 2, Size.Height \ 2)
+            blinkBlocks(blockPtr).Size = New Size(Size.Width, Size.Height)
             blinkBlocks(blockPtr).Show()
         End If
         blinkBlocks(blockPtr).TimerClose.Enabled = True

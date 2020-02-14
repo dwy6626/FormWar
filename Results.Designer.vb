@@ -43,7 +43,7 @@ Partial Class Results
         Me.LabelClose.AutoSize = True
         Me.LabelClose.Font = New System.Drawing.Font("微軟正黑體", 15.0!, System.Drawing.FontStyle.Bold)
         Me.LabelClose.ForeColor = System.Drawing.Color.Navy
-        Me.LabelClose.Location = New System.Drawing.Point(211, 504)
+        Me.LabelClose.Location = New System.Drawing.Point(211, 481)
         Me.LabelClose.Name = "LabelClose"
         Me.LabelClose.Size = New System.Drawing.Size(172, 25)
         Me.LabelClose.TabIndex = 1
